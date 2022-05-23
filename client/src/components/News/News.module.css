@@ -1,0 +1,10 @@
+.post {
+    display: flex;
+    flex-direction: column;
+}
+.post_published {
+    text-align: end;
+}
+.title {
+    text-align: center;
+}
