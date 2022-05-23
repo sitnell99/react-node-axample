@@ -1,8 +1,10 @@
-import {useQuery} from "react-apollo";
-import getAllPosts from "../../queries/getAllPosts";
+import {useQuery} from "@apollo/client";
+import getPosts from "../../queries/getAllPosts";
 
 const Test = () => {
-    const { data } = useQuery(getAllPosts);
+
+    const { data } = useQuery(getPosts);
     console.log('data', data)
+
 }
 export default Test

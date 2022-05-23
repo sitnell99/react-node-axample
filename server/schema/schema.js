@@ -132,7 +132,7 @@ const Mutation = new GraphQLObjectType({
 const Query = new GraphQLObjectType({
     name: 'Query',
     fields: {
-        getPosts: {
+        getAllPosts: {
             type: new GraphQLList(PostsType),
             resolve(parent, args) {
                 return Posts.find({})
