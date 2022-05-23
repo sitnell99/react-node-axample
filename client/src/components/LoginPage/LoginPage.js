@@ -1,37 +1,30 @@
-import classes from './LoginPage.module.css';
+import {useState} from "react";
+import SighUpForm from "./SignUpForm";
+import SignInForm from "./SignInForm";
+import classes from "./LoginPage.module.css";
 
 const LoginPage = () => {
 
-    const handleLogIn = () => {
+    const [defaultForm, setDefaultForm] = useState(true);
 
+    const toggle = () => {
+        if(defaultForm) {
+            setDefaultForm(false);
+        } else {
+            setDefaultForm(true);
+        }
     };
+    const buttonText = defaultForm ? 'Switch To Sign Up' : 'Switch To Sign In';
+    const switchButton = <button className={classes.blackBtn} onClick={toggle}>{buttonText}</button>;
 
     return (
-            <div className={`${classes.formContainer} ${classes.editFormContainer}`}>
-                <h1>Атвторизація</h1>
-                <form onSubmit={handleLogIn}>
-                    <div className={classes.formItem}>
-                        <input
-                            type="text"
-                            name="login"
-                            placeholder='Login'
-                            required
-                        />
-                    </div>
-                    <div className={classes.formItem}>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder='Password'
-                            required
-                        />
-                    </div>
-                    <div className={classes.formItem}>
-                        <button className={classes.blackBtn} type="submit">Вхід</button>
-                    </div>
-                </form>
-            </div>
+        <>
+        { defaultForm
+            ? <SignInForm switchButton={switchButton}/>
+            : <SighUpForm switchButton={switchButton}/>
+        }
+        </>
     )
-}
 
+}
 export default LoginPage;
