@@ -1,18 +1,29 @@
 import classes from './LoginPage.module.css';
+import {useMutation} from "@apollo/client";
+import AddNewUser from '../../mutations/addNewUser';
+import {Form, Input} from 'informed';
 
 const SighUpForm = (props) => {
 
-    const { switchButton } = props;
-    const handleLogIn = () => {
+    const {switchButton} = props;
+    const [addNewUser, {data}] = useMutation(AddNewUser);
+
+    const handleAddNewUser = formValues => {
+        try {
+            addNewUser({variables: {...formValues.values}});
+            return data
+        } catch (error) {
+            console.log(error)
+        }
 
     };
 
     return (
         <div className={classes.formContainer}>
             <h1>Sign Up</h1>
-            <form onSubmit={handleLogIn}>
+            <Form onSubmit={handleAddNewUser}>
                 <div className={classes.formItem}>
-                    <input
+                    <Input
                         type="text"
                         name="firstname"
                         placeholder='Firstname'
@@ -20,7 +31,7 @@ const SighUpForm = (props) => {
                     />
                 </div>
                 <div className={classes.formItem}>
-                    <input
+                    <Input
                         type="text"
                         name="lastname"
                         placeholder='Lastname'
@@ -28,15 +39,15 @@ const SighUpForm = (props) => {
                     />
                 </div>
                 <div className={classes.formItem}>
-                    <input
+                    <Input
                         type="text"
-                        name="login"
-                        placeholder='Login'
+                        name="phone"
+                        placeholder='Phone number'
                         required
                     />
                 </div>
                 <div className={classes.formItem}>
-                    <input
+                    <Input
                         type="date"
                         name="birthdate"
                         placeholder='Birthdate'
@@ -44,7 +55,7 @@ const SighUpForm = (props) => {
                     />
                 </div>
                 <div className={classes.formItem}>
-                    <input
+                    <Input
                         type="password"
                         name="password"
                         placeholder='Password'
@@ -52,7 +63,7 @@ const SighUpForm = (props) => {
                     />
                 </div>
                 <div className={classes.formItem}>
-                    <input
+                    <Input
                         type="password"
                         name="password_confirm"
                         placeholder='Confirm Password'
@@ -63,7 +74,7 @@ const SighUpForm = (props) => {
                     <button className={classes.blackBtn} type="submit">Continue</button>
                     {switchButton}
                 </div>
-            </form>
+            </Form>
         </div>
     )
 }

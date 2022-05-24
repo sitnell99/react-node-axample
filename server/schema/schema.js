@@ -9,8 +9,8 @@ const SignUpType = new GraphQLObjectType({
     name: 'SignUpType',
     fields: () => ({
         id: {type: GraphQLID},
-        name: {type: new GraphQLNonNull(GraphQLString)},
-        surname: {type: new GraphQLNonNull(GraphQLString)},
+        firstname: {type: new GraphQLNonNull(GraphQLString)},
+        lastname: {type: new GraphQLNonNull(GraphQLString)},
         birthdate: {type: new GraphQLNonNull(GraphQLDate)},
         phone: {type: new GraphQLNonNull(GraphQLString)},
         password: {type: new GraphQLNonNull(GraphQLString)}
@@ -69,16 +69,16 @@ const Mutation = new GraphQLObjectType({
         addNewUser: {
             type: SignUpType,
             args: {
-                name: {type: new GraphQLNonNull(GraphQLString)},
-                surname: {type: new GraphQLNonNull(GraphQLString)},
+                firstname: {type: new GraphQLNonNull(GraphQLString)},
+                lastname: {type: new GraphQLNonNull(GraphQLString)},
                 birthdate: {type: new GraphQLNonNull(GraphQLDate)},
                 phone: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)}
             },
             resolve(parent, args) {
                 const user = new Users({
-                    name: args.name,
-                    surname: args.surname,
+                    firstname: args.firstname,
+                    lastname: args.lastname,
                     birthdate: args.birthdate,
                     phone: args.phone,
                     password: args.password

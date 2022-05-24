@@ -52,3 +52,11 @@
 .blackBtn:hover {
     background-color: rgba(1, 1, 1, 0.8)
 }
+
+.formItem small {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    padding-left: 15px;
+    color: #D8000C;
+}

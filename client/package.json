@@ -13,7 +13,7 @@
     "apollo-boost": "^0.4.9",
     "apollo-upload-client": "^17.0.0",
     "graphql": "^16.5.0",
-    "informed": "~3.27.0",
+    "informed": "4.13.0",
     "react": "^18.1.0",
     "react-apollo": "^3.1.5",
     "react-dom": "^18.1.0",
