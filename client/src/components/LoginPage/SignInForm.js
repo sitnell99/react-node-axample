@@ -4,14 +4,15 @@ const SignInForm = (props) => {
 
     const { switchButton } = props;
 
-    const handleLogIn = () => {
+    const handleAddUser = () => {
+
 
     };
 
     return (
         <div className={classes.formContainer}>
                 <h1>Sign In</h1>
-                <form onSubmit={handleLogIn}>
+                <form onSubmit={handleAddUser}>
                     <div className={classes.formItem}>
                         <input
                             type="text"

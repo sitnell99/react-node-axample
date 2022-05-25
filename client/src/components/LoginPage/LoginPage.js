@@ -21,7 +21,7 @@ const LoginPage = () => {
         <>
         { defaultForm
             ? <SignInForm switchButton={switchButton}/>
-            : <SighUpForm switchButton={switchButton}/>
+            : <SighUpForm switchButton={switchButton} setDefaultForm={setDefaultForm}/>
         }
         </>
     )

@@ -1,0 +1,69 @@
+import {useState} from "react";
+
+export const useFormValidation = () => {
+
+    const [phoneNumberError, setPhoneNumberError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+    const [currentPassword, setCurrentPassword] = useState('');
+    const hasAnyFieldError = phoneNumberError || passwordError || confirmPasswordError;
+
+    const validatePhone = value => {
+        if (value) {
+            const match = value.match(/\d/g) === null || value.match(/\d/g).length !== 12;
+            if (match) {
+                setPhoneNumberError(true)
+            } else {
+                setPhoneNumberError(false)
+            }
+        }
+    }
+
+    const validatePassword = value => {
+        if (value) {
+            const count = {
+                lower: 0,
+                upper: 0,
+                digit: 0,
+                special: 0
+            };
+
+            for (const char of value) {
+                if (/[a-z]/.test(char)) count.lower++;
+                else if (/[A-Z]/.test(char)) count.upper++;
+                else if (/\d/.test(char)) count.digit++;
+                else if (/\S/.test(char)) count.special++;
+            }
+
+            if (Object.values(count).filter(Boolean).length < 3) {
+                setPasswordError(true);
+            } else {
+                setCurrentPassword(value);
+                setPasswordError(false);
+            }
+        }
+    };
+
+    const validateConfirmPassword = (value) => {
+        if (value) {
+            if (value === currentPassword) {
+                setConfirmPasswordError(false);
+            } else {
+                setConfirmPasswordError(true);
+            }
+        }
+
+    };
+
+    return {
+        validatePhone,
+        validatePassword,
+        validateConfirmPassword,
+        passwordError,
+        confirmPasswordError,
+        hasAnyFieldError,
+        phoneNumberError
+    }
+
+};
+
