@@ -5,25 +5,26 @@ const {GraphQLSchema, GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList, 
 const Posts = require('../models/posts');
 const Users = require('../models/users');
 const bcrypt = require("bcryptjs");
+const jwt = require('jsonwebtoken');
 
 const SignUpType = new GraphQLObjectType({
     name: 'SignUpType',
     fields: () => ({
         id: {type: GraphQLID},
-        firstname: { type: GraphQLString },
-        lastname: { type: GraphQLString },
-        birthdate: { type: GraphQLDate },
+        firstname: {type: GraphQLString},
+        lastname: {type: GraphQLString},
+        birthdate: {type: GraphQLDate},
         phone: {type: new GraphQLNonNull(GraphQLString)},
         password: {type: new GraphQLNonNull(GraphQLString)}
     })
 });
 
-const LogIn = new GraphQLObjectType({
-    name: 'LogIn',
+const LogInType = new GraphQLObjectType({
+    name: 'LogInType',
     fields: () => ({
-        id: {type: GraphQLID},
-        phone: {type: GraphQLString},
-        password: {type: GraphQLString}
+        id: {type: new GraphQLNonNull(GraphQLID)},
+        phone: {type: new GraphQLNonNull(GraphQLString)},
+        token: {type: GraphQLString}
     })
 });
 
@@ -70,9 +71,9 @@ const Mutation = new GraphQLObjectType({
         addNewUser: {
             type: SignUpType,
             args: {
-                firstname: { type: GraphQLString },
-                lastname: { type: GraphQLString },
-                birthdate: { type: GraphQLDate },
+                firstname: {type: GraphQLString},
+                lastname: {type: GraphQLString},
+                birthdate: {type: GraphQLDate},
                 phone: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)}
             },
@@ -85,6 +86,42 @@ const Mutation = new GraphQLObjectType({
                     password: bcrypt.hashSync(args.password, bcrypt.genSaltSync())
                 });
                 return user.save();
+            }
+        },
+        logIn: {
+            type: LogInType,
+            args: {
+                id: {type: GraphQLID},
+                phone: {type: new GraphQLNonNull(GraphQLString)},
+                password: {type: new GraphQLNonNull(GraphQLString)},
+                token: {type: GraphQLString}
+            },
+            async resolve(parent, args) {
+                const user = await Users.findOne({where: args.phone})
+                if (user) {
+
+                    if (user.phone !== args.phone) {
+                        throw new Error('You are not registered')
+                    }
+
+                    const valid = bcrypt.compareSync(args.password, user.password)
+
+                    if (!valid) {
+                        throw new Error('Incorrect password')
+                    }
+
+                    const token = jwt.sign(
+                        {id: user.id},
+                        process.env.JWT_SECRET_KEY,
+                        {expiresIn: '1d'}
+                    )
+
+                    return {
+                        id: user.id,
+                        phone: user.phone,
+                        token
+                    }
+                }
             }
         },
         removePost: {

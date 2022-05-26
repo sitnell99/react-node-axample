@@ -90,8 +90,7 @@ const SighUpForm = (props) => {
                             required
                             onChange={(value) => validatePassword(value.value)}
                         />
-                        {passwordError &&
-                            <small>{'A password must contain at least 3 of the following: lowercase, uppercase, digits, special characters.'}</small>}
+                        {passwordError && <small>{'A password must contain at least 3 of the following: lowercase, uppercase, digits, special characters.'}</small>}
                     </div>
                     <div className={classes.formItem}>
                         <Input

@@ -11,11 +11,13 @@ const httpLink = createUploadLink({
     uri: 'http://localhost:3005/graphql'
 });
 
+const token = localStorage.getItem('token')
+
 const authLink = setContext((_, {headers}) => {
     return {
         headers: {
             ...headers,
-            authorization: ''
+            authorization: token ? `Bearer ${token}` : ''
         }
     };
 });
