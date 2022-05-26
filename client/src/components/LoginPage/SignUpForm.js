@@ -23,8 +23,10 @@ const SighUpForm = (props) => {
 
     const handleAddNewUser = formValues => {
         if (!hasAnyFieldError) {
+            const signUpValues = {...formValues.values}
+            const { password_confirm, ...rest } = signUpValues;
             try {
-                addNewUser({variables: {...formValues.values}});
+                addNewUser({variables: rest});
                 setResultMessage('User was successfully added, please log in');
             } catch (error) {
                 console.log(error)

@@ -3,11 +3,15 @@ const {graphqlHTTP} = require('express-graphql');
 const schema = require('../schema/schema');
 const mongoose = require('mongoose');
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-const PORT = 3005;
+const PORT = process.env.PORT || 3005;
 
-mongoose.connect('mongodb+srv://Valentyn:FLATRONW2042S@graphql.whsz3.mongodb.net/?retryWrites=true&w=majority', {useNewUrlParser:true})
+mongoose.connect(process.env.DB_URI, {
+    useNewUrlParser:true,
+    useUnifiedTopology: true
+})
 
 app.use(cors());
 
@@ -18,8 +22,15 @@ app.use('/graphql', graphqlHTTP({
 
 const dbConnect = mongoose.connection;
 dbConnect.on('error', err => console.log(`Connection error: ${err}`));
-dbConnect.once('open', () => console.log('Connection successful!'))
+dbConnect.once('open', () => console.log('Connection successful!'));
 
-app.listen(PORT, err => {
-    err ? console.log(err) : console.log('Server started!');
-});
+const portListen = async () => {
+    try {
+        app.listen(PORT, () => console.log(`Server started on ${PORT} port!`));
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+portListen();
+

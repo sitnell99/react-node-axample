@@ -4,6 +4,7 @@ const {GraphQLDate} = graphqlScalars;
 const {GraphQLSchema, GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList, GraphQLNonNull} = graphql;
 const Posts = require('../models/posts');
 const Users = require('../models/users');
+const bcrypt = require("bcryptjs");
 
 const SignUpType = new GraphQLObjectType({
     name: 'SignUpType',
@@ -81,7 +82,7 @@ const Mutation = new GraphQLObjectType({
                     lastname: args.lastname,
                     birthdate: args.birthdate,
                     phone: args.phone,
-                    password: args.password
+                    password: bcrypt.hashSync(args.password, bcrypt.genSaltSync())
                 });
                 return user.save();
             }
@@ -119,7 +120,7 @@ const Mutation = new GraphQLObjectType({
                             surname: args.surname,
                             birthdate: args.birthdate,
                             phone: args.phone,
-                            password: args.password
+                            password: bcrypt.hashSync(args.password, bcrypt.genSaltSync())
                         }
                     },
                     {new: true}
