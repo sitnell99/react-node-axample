@@ -6,7 +6,6 @@ import classes from "./LoginPage.module.css";
 const LoginPage = () => {
 
     const [defaultForm, setDefaultForm] = useState(true);
-
     const toggle = () => {
         if(defaultForm) {
             setDefaultForm(false);

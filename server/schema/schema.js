@@ -24,6 +24,9 @@ const LogInType = new GraphQLObjectType({
     fields: () => ({
         id: {type: new GraphQLNonNull(GraphQLID)},
         phone: {type: new GraphQLNonNull(GraphQLString)},
+        name: {type: GraphQLString},
+        surname:{type: GraphQLString},
+        birthdate: {type: GraphQLDate},
         token: {type: GraphQLString}
     })
 });
@@ -92,35 +95,42 @@ const Mutation = new GraphQLObjectType({
             type: LogInType,
             args: {
                 id: {type: GraphQLID},
+                name: {type: GraphQLString},
+                surname:{type: GraphQLString},
+                birthdate: {type: GraphQLDate},
                 phone: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)},
                 token: {type: GraphQLString}
             },
             async resolve(parent, args) {
-                const user = await Users.findOne({where: args.phone})
-                if (user) {
+                try {
+                    const user = await Users.findOne({where: args.phone})
+                    if (user) {
 
-                    if (user.phone !== args.phone) {
-                        throw new Error('You are not registered')
+                        if (user.phone !== args.phone) {
+                            throw new Error('You are not registered')
+                        }
+
+                        const valid = bcrypt.compareSync(args.password, user.password)
+
+                        if (!valid) {
+                            throw new Error('Incorrect password')
+                        }
+
+                        const token = jwt.sign(
+                            {id: user.id},
+                            process.env.JWT_SECRET_KEY,
+                            {expiresIn: '1d'}
+                        )
+
+                        return {
+                            id: user.id,
+                            phone: user.phone,
+                            token
+                        }
                     }
-
-                    const valid = bcrypt.compareSync(args.password, user.password)
-
-                    if (!valid) {
-                        throw new Error('Incorrect password')
-                    }
-
-                    const token = jwt.sign(
-                        {id: user.id},
-                        process.env.JWT_SECRET_KEY,
-                        {expiresIn: '1d'}
-                    )
-
-                    return {
-                        id: user.id,
-                        phone: user.phone,
-                        token
-                    }
+                } catch (e) {
+                    throw new Error(e)
                 }
             }
         },
