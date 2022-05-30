@@ -20,6 +20,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-start;
+}
+.formItem label {
+    margin-left: 15px;
+}
+.formItem.formButton {
     align-items: center;
 }
 .formContainer form,

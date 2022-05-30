@@ -102,7 +102,7 @@ const SighUpForm = (props) => {
                         />
                         {confirmPasswordError && <small>{'Passwords must match.'}</small>}
                     </div>
-                    <div className={classes.formItem}>
+                    <div className={`${classes.formItem} ${classes.formButton}`}>
                         <button className={classes.blackBtn} type="submit">Continue</button>
                         {switchButton}
                     </div>

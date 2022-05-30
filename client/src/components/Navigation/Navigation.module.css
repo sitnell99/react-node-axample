@@ -1,0 +1,40 @@
+.navigationBlock {
+    width: 300px;
+    box-shadow: 0 0 15px rgb(204 204 204);
+    clip-path: inset(0px -15px 0px 0px);
+    background: #fff;
+    position: absolute;
+    height: calc(100% - 100px);
+    z-index: 1;
+    visibility: visible;
+    transform: translateX(0);
+    opacity: 1;
+}
+.hideNavigation {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-100px);
+    transition: all .3s ease;
+}
+.navigationBlock ul {
+    padding-left: 0;
+    margin: 0;
+}
+.navigationBlock ul li {
+    padding: 20px 30px;
+    border-bottom: 1px solid #CCCCCCFF;
+    list-style-type: none;
+}
+.navigationBlock ul li:first-of-type {
+    border-top: 1px solid #CCCCCCFF;
+}
+.trigger {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    display: flex;
+    align-items: center;
+}
+.trigger svg {
+    margin-right: 10px;
+}

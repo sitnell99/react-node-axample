@@ -4,15 +4,14 @@ import {useUserContext} from "../../context/UserContext";
 
 const Header = () => {
 
-    const { isAuthorized, setUser } = useUserContext();
+    const { isAuthorized } = useUserContext();
 
     return (
         <header className={classes.header}>
             <nav>
                 <Link to='/news'>News</Link>
-                <Link to='/login'>Login</Link>
+                { !isAuthorized && <Link to='/login'>Login</Link> }
             </nav>
-            { isAuthorized && <button onClick={setUser(null)}>Log Out</button> }
         </header>
     )
 

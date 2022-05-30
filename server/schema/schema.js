@@ -24,8 +24,8 @@ const LogInType = new GraphQLObjectType({
     fields: () => ({
         id: {type: new GraphQLNonNull(GraphQLID)},
         phone: {type: new GraphQLNonNull(GraphQLString)},
-        name: {type: GraphQLString},
-        surname:{type: GraphQLString},
+        firstname: {type: GraphQLString},
+        lastname:{type: GraphQLString},
         birthdate: {type: GraphQLDate},
         token: {type: GraphQLString}
     })
@@ -34,11 +34,12 @@ const LogInType = new GraphQLObjectType({
 const UserDataType = new GraphQLObjectType({
     name: 'UserDataType',
     fields: () => ({
-        id: {type: GraphQLID},
-        name: {type: new GraphQLNonNull(GraphQLString)},
-        surname: {type: new GraphQLNonNull(GraphQLString)},
-        birthdate: {type: new GraphQLNonNull(GraphQLDate)},
-        phone: {type: new GraphQLNonNull(GraphQLString)},
+        id: {type: new GraphQLNonNull(GraphQLID)},
+        firstname: {type: GraphQLString},
+        lastname:{type: GraphQLString},
+        birthdate: {type: GraphQLDate},
+        phone: {type: GraphQLString},
+        password: {type: GraphQLString}
     })
 });
 
@@ -95,8 +96,8 @@ const Mutation = new GraphQLObjectType({
             type: LogInType,
             args: {
                 id: {type: GraphQLID},
-                name: {type: GraphQLString},
-                surname:{type: GraphQLString},
+                firstname: {type: GraphQLString},
+                lastname:{type: GraphQLString},
                 birthdate: {type: GraphQLDate},
                 phone: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)},
@@ -151,23 +152,23 @@ const Mutation = new GraphQLObjectType({
         updateUserData: {
             type: UserDataType,
             args: {
-                id: {type: GraphQLID},
-                name: {type: new GraphQLNonNull(GraphQLString)},
-                surname: {type: new GraphQLNonNull(GraphQLString)},
-                birthdate: {type: new GraphQLNonNull(GraphQLDate)},
-                phone: {type: new GraphQLNonNull(GraphQLString)},
-                password: {type: new GraphQLNonNull(GraphQLString)}
+                id: {type: new GraphQLNonNull(GraphQLID)},
+                firstname: {type: GraphQLString},
+                lastname:{type: GraphQLString},
+                birthdate: {type: GraphQLDate},
+                phone: {type: GraphQLString},
+                password: {type: GraphQLString}
             },
             resolve(parent, args) {
                 return Users.findByIdAndUpdate(
                     args.id,
                     {
                         $set: {
-                            name: args.name,
-                            surname: args.surname,
+                            firstname: args.firstname,
+                            lastname: args.lastname,
                             birthdate: args.birthdate,
                             phone: args.phone,
-                            password: bcrypt.hashSync(args.password, bcrypt.genSaltSync())
+                            password: args.password ? bcrypt.hashSync(args.password, bcrypt.genSaltSync()) : args.password
                         }
                     },
                     {new: true}

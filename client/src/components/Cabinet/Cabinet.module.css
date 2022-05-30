@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+.container h1 {
+    text-align: center;
+}
+.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+}
+.disabled input {
+    border-color: rgba(0,0,0,0.7);
+}

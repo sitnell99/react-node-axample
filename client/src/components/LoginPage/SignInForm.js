@@ -9,8 +9,7 @@ import {useUserContext} from "../../context/UserContext";
 const SignInForm = (props) => {
 
     const { switchButton } = props;
-    const {setUser, user} = useUserContext();
-    console.log('user', user)
+    const {setUser} = useUserContext();
     const [resultMessage, setResultMessage] = useState('');
     const [logIn, {error: mutationError}] = useMutation(LogIn);
 
@@ -24,9 +23,11 @@ const SignInForm = (props) => {
     const handleLogIn = async formValues => {
         try {
             const response = await logIn({variables: {...formValues.values}});
-            localStorage.setItem('token', response.data.logIn.token)
-            setUser(response.data.logIn)
-            // setResultMessage('You are successfully logged in');
+            if(response.data?.logIn) {
+                localStorage.setItem('token', response.data.logIn.token)
+                await setUser(response.data.logIn)
+            }
+             setResultMessage('You are successfully logged in');
         } catch (e) {
             console.log(e)
         }
@@ -61,7 +62,7 @@ const SignInForm = (props) => {
                     <div className={classes.formItem}>
                          {mutationError && <small>{mutationError.message}</small>}
                     </div>
-                    <div className={classes.formItem}>
+                    <div className={`${classes.formItem} ${classes.formButton}`}>
                         <button className={classes.blackBtn} type="submit">Continue</button>
                         {switchButton}
                     </div>
