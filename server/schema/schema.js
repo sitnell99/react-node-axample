@@ -127,8 +127,13 @@ const Mutation = new GraphQLObjectType({
                         return {
                             id: user.id,
                             phone: user.phone,
+                            firstname: user.firstname,
+                            lastname: user.lastname,
+                            birthdate: user.birthdate,
                             token
                         }
+                    } else {
+                        throw new Error('You are not registered')
                     }
                 } catch (e) {
                     throw new Error(e)
