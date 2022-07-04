@@ -6,10 +6,12 @@ export const useFormValidation = () => {
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
     const [currentPassword, setCurrentPassword] = useState('');
+    const [hasAnyFieldChanges, setHasAnyFieldChanges] = useState(false);
     const hasAnyFieldError = phoneNumberError || passwordError || confirmPasswordError;
 
     const validatePhone = value => {
         if (value) {
+            setHasAnyFieldChanges(true);
             const match = value.match(/\d/g) === null || value.match(/\d/g).length !== 12;
             if (match) {
                 setPhoneNumberError(true)
@@ -21,6 +23,7 @@ export const useFormValidation = () => {
 
     const validatePassword = value => {
         if (value) {
+            setHasAnyFieldChanges(true);
             const count = {
                 lower: 0,
                 upper: 0,
@@ -46,6 +49,7 @@ export const useFormValidation = () => {
 
     const validateConfirmPassword = (value) => {
         if (value) {
+            setHasAnyFieldChanges(true);
             if (value === currentPassword) {
                 setConfirmPasswordError(false);
             } else {
@@ -62,7 +66,9 @@ export const useFormValidation = () => {
         passwordError,
         confirmPasswordError,
         hasAnyFieldError,
-        phoneNumberError
+        phoneNumberError,
+        hasAnyFieldChanges,
+        setHasAnyFieldChanges
     }
 
 };

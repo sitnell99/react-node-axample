@@ -19,11 +19,13 @@ const Cabinet = () => {
         hasAnyFieldError,
         confirmPasswordError,
         passwordError,
+        hasAnyFieldChanges,
+        setHasAnyFieldChanges
     } = useFormValidation();
 
     const handleEditInformation = async formValues => {
         try {
-            if (!hasAnyFieldError) {
+            if (!hasAnyFieldError && hasAnyFieldChanges) {
                 const values = {...formValues.values}
                 const {password_confirm, ...rest} = values;
                 const response = await updateUserData({variables: {...rest, id: user.id}});
@@ -31,6 +33,9 @@ const Cabinet = () => {
                     await setUser(response.data.updateUserData)
                 }
                 setResultMessage('Information was updated');
+                setHasAnyFieldChanges(false);
+            } else {
+                setResultMessage('You need to change some information');
             }
         } catch (e) {
             console.log(e)
@@ -66,6 +71,7 @@ const Cabinet = () => {
                             name="firstname"
                             placeholder='Firstname'
                             initialValue={user.firstname}
+                            onChange={(value) => setHasAnyFieldChanges(true)}
                         />
                     </div>
                     <div className={classes.formItem}>
@@ -75,6 +81,7 @@ const Cabinet = () => {
                             name="lastname"
                             placeholder='Lastname'
                             initialValue={user.lastname}
+                            onChange={(value) => setHasAnyFieldChanges(true)}
                         />
                     </div>
                     <div className={classes.formItem}>
@@ -84,6 +91,7 @@ const Cabinet = () => {
                             name="birthdate"
                             placeholder='Birthdate'
                             initialValue={user.birthdate}
+                            onChange={(value) => setHasAnyFieldChanges(true)}
                         />
                     </div>
                     <div className={classes.formItem}>
