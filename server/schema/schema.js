@@ -4,53 +4,11 @@ const {GraphQLDate} = graphqlScalars;
 const {GraphQLSchema, GraphQLObjectType, GraphQLID, GraphQLString, GraphQLList, GraphQLNonNull} = graphql;
 const Posts = require('../models/posts');
 const Users = require('../models/users');
+const Notes = require('../models/notes');
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
-
-const SignUpType = new GraphQLObjectType({
-    name: 'SignUpType',
-    fields: () => ({
-        firstname: {type: GraphQLString},
-        lastname: {type: GraphQLString},
-        birthdate: {type: GraphQLDate},
-        phone: {type: new GraphQLNonNull(GraphQLString)},
-        password: {type: new GraphQLNonNull(GraphQLString)}
-    })
-});
-
-const LogInType = new GraphQLObjectType({
-    name: 'LogInType',
-    fields: () => ({
-        id: {type: new GraphQLNonNull(GraphQLID)},
-        phone: {type: new GraphQLNonNull(GraphQLString)},
-        firstname: {type: GraphQLString},
-        lastname:{type: GraphQLString},
-        birthdate: {type: GraphQLDate},
-        token: {type: GraphQLString}
-    })
-});
-
-const UserDataType = new GraphQLObjectType({
-    name: 'UserDataType',
-    fields: () => ({
-        id: {type: new GraphQLNonNull(GraphQLID)},
-        firstname: {type: GraphQLString},
-        lastname:{type: GraphQLString},
-        birthdate: {type: GraphQLDate},
-        phone: {type: GraphQLString},
-        password: {type: GraphQLString}
-    })
-});
-
-const PostsType = new GraphQLObjectType({
-    name: 'PostsType',
-    fields: () => ({
-        id: {type: GraphQLID},
-        name: {type: new GraphQLNonNull(GraphQLString)},
-        published: {type: new GraphQLNonNull(GraphQLDate)},
-        content: {type: new GraphQLNonNull(GraphQLString)},
-    })
-});
+const types = require('./types');
+const {PostsType, SignUpType, LogInType, UserDataType, NoteType} = types;
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -179,6 +137,29 @@ const Mutation = new GraphQLObjectType({
                     {new: true}
                 )
             }
+        },
+        addNote: {
+            type: NoteType,
+            args: {
+                theme: {type: new GraphQLNonNull(GraphQLString)},
+                content: {type: new GraphQLNonNull(GraphQLString)},
+                category: {type: new GraphQLNonNull(GraphQLString)}
+            },
+            resolve(parent, args) {
+                const notes = new Notes({
+                    theme: args.theme,
+                    content: args.content,
+                    category: args.category
+                });
+                return notes.save();
+            }
+        },
+        removeNote: {
+            type: NoteType,
+            args: {id: {type: GraphQLID}},
+            resolve(parent, args) {
+                return Notes.findByIdAndRemove(args.id)
+            }
         }
     }
 })
@@ -204,6 +185,12 @@ const Query = new GraphQLObjectType({
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
                 return Users.findById(args.id)
+            }
+        },
+        getAllNotes: {
+            type: new GraphQLList(NoteType),
+            resolve(parent, args) {
+                return Notes.find({})
             }
         },
     }

@@ -29,7 +29,9 @@ const Navigation = () => {
                     <li>
                         <Link to={'/cabinet'} onClick={toggleMenu}>Personal information</Link>
                     </li>
-                    <li>{'My notes'}</li>
+                    <li>
+                        <Link to={'/notes'} onClick={toggleMenu}>My notes</Link>
+                    </li>
                     <li>{'News'}</li>
                     <li>{'Other members'}</li>
                     <li>
