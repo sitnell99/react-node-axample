@@ -10,7 +10,6 @@ const jwt = require('jsonwebtoken');
 const SignUpType = new GraphQLObjectType({
     name: 'SignUpType',
     fields: () => ({
-        id: {type: GraphQLID},
         firstname: {type: GraphQLString},
         lastname: {type: GraphQLString},
         birthdate: {type: GraphQLDate},
@@ -104,8 +103,9 @@ const Mutation = new GraphQLObjectType({
                 token: {type: GraphQLString}
             },
             async resolve(parent, args) {
+
+                const user = await Users.findOne({phone: args.phone});
                 try {
-                    const user = await Users.findOne({where: args.phone})
                     if (user) {
 
                         if (user.phone !== args.phone) {

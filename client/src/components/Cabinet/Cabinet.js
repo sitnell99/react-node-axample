@@ -26,7 +26,6 @@ const Cabinet = () => {
             if (!hasAnyFieldError) {
                 const values = {...formValues.values}
                 const {password_confirm, ...rest} = values;
-                console.log('formValues.values', formValues.values)
                 const response = await updateUserData({variables: {...rest, id: user.id}});
                 if (response.data?.updateUserData) {
                     await setUser(response.data.updateUserData)
