@@ -1,20 +1,13 @@
 import classes from './Navigation.module.css';
 import {useUserContext} from "../../context/UserContext";
-import {useState} from "react";
 import {Link} from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
+import {useModal} from "../../util/useModal";
 
 const Navigation = () => {
 
-    const [openMenu, setOpenMenu] = useState(true);
+    const { showModal: openMenu, toggleModal: toggleMenu, modalRef: menuRef } = useModal();
     const {logOutFunc, user} = useUserContext();
-    const toggleMenu = () => {
-        if (openMenu) {
-            setOpenMenu(false)
-        } else {
-            setOpenMenu(true)
-        }
-    };
     const hideNavigation = !openMenu ? classes.hideNavigation : '';
 
     return (
@@ -24,7 +17,7 @@ const Navigation = () => {
                 {user.firstname}
             </button>
 
-            <div className={`${classes.navigationBlock} ${hideNavigation}`}>
+            <div className={`${classes.navigationBlock} ${hideNavigation}`} ref={menuRef}>
                 <ul>
                     <li>
                         <Link to={'/cabinet'} onClick={toggleMenu}>Personal information</Link>

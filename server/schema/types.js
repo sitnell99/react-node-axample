@@ -38,6 +38,16 @@ const UserDataType = new GraphQLObjectType({
     })
 });
 
+const GetUserDataType = new GraphQLObjectType({
+    name: 'GetUserDataType',
+    fields: () => ({
+        firstname: {type: GraphQLString},
+        lastname:{type: GraphQLString},
+        birthdate: {type: GraphQLDate},
+        phone: {type: GraphQLString},
+    })
+});
+
 const PostsType = new GraphQLObjectType({
     name: 'PostsType',
     fields: () => ({
@@ -58,4 +68,4 @@ const NoteType = new GraphQLObjectType({
     })
 });
 
-module.exports = { PostsType, UserDataType, LogInType, SignUpType, NoteType};
+module.exports = { PostsType, UserDataType, LogInType, SignUpType, NoteType, GetUserDataType};

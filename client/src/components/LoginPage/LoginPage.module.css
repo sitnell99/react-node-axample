@@ -30,18 +30,22 @@
 }
 .formContainer form,
 .formContainer .formItem input,
-.formContainer .formItem textarea {
+.formContainer .formItem textarea,
+.formContainer .formItem select,
+.formContainer .formItem option {
     width: 100%;
     max-width: 100%;
     min-width: 100%;
     max-height: 400px;
+    min-height: 50px;
 }
 
-.formItem input, .formItem textarea {
+.formItem input, .formItem textarea, .formItem select, .formItem option {
     border: 1px solid #000;
     border-radius: 10px;
     margin: 10px 0;
     padding: 15px;
+    background: #fff;
 }
 .formContainer h2 {
     text-align: center;
@@ -72,4 +76,30 @@
 .resultTitle {
     text-align: center;
     padding-top: 200px;
+}
+.modalWindow {
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    width: 100%;
+    margin: auto;
+    height: 100%;
+    align-items: center;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+}
+.modalWindow .formContainer {
+    width: 100%;
+    max-width: 50%;
+    position: relative;
+}
+.closeBtn {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 25px;
+}
+.title {
+    text-align: center;
 }

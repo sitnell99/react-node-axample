@@ -8,7 +8,7 @@ const Notes = require('../models/notes');
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const types = require('./types');
-const {PostsType, SignUpType, LogInType, UserDataType, NoteType} = types;
+const {PostsType, SignUpType, LogInType, UserDataType, NoteType, GetUserDataType} = types;
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -181,7 +181,7 @@ const Query = new GraphQLObjectType({
             }
         },
         getUserData: {
-            type: UserDataType,
+            type: GetUserDataType,
             args: {id: {type: GraphQLID}},
             resolve(parent, args) {
                 return Users.findById(args.id)

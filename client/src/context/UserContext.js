@@ -1,9 +1,19 @@
-import {createContext, useContext, useMemo, useState} from 'react';
+import {createContext, useContext, useEffect, useMemo, useState} from 'react';
 import { useHistory } from "react-router-dom";
+import {useQuery} from "@apollo/client";
+import getUserData from "../queries/getUserData";
 
 const UserContext = createContext();
 
 const UserContextProvider = (props) => {
+
+    const { data, loading } = useQuery(getUserData);
+
+    useEffect( () => {
+        if (!data) {
+            console.log('data', data)
+        }
+    }, [data])
 
     const history = useHistory();
     const [user, setUser] = useState(null);
@@ -14,7 +24,7 @@ const UserContextProvider = (props) => {
         localStorage.removeItem('token');
     }
     const userContextInfo = useMemo(() => ({user, setUser, isAuthorized, logOutFunc}), [user, setUser]);
-
+    console.log('userContextInfo', userContextInfo)
     return (
         <UserContext.Provider value={userContextInfo}>
             {props.children}

@@ -3,7 +3,7 @@ import News from "../News";
 import LoginPage from "../LoginPage/LoginPage";
 import {useUserContext} from "../../context/UserContext";
 import Cabinet from "../Cabinet";
-import Notes from "../Notes";
+import Notes from "../Notes/Notes";
 
 const Routes = () =>  {
 

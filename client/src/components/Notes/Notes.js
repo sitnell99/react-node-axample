@@ -1,46 +1,66 @@
-import classes from "../LoginPage/LoginPage.module.css";
-import {Form, Input, TextArea} from "informed";
-import {Select} from "@mui/material";
+import AddNoteForm from "./AddNoteForm";
+import {useModal} from "../../util/useModal";
+import {useQuery} from "@apollo/client";
+import getAllNotes from "../../queries/getAllNotes";
+import classes from "../News/News.module.css";
+import formClasses from "../LoginPage/LoginPage.module.css";
+import {useState, useEffect} from "react";
 
 const Notes = () => {
 
+    const {showModal: showNoteForm, toggleModal: toggleNoteForm, modalRef: noteFormRef} = useModal();
+    const [resultMessage, setResultMessage] = useState(false);
+
+    const {data, loading} = useQuery(getAllNotes);
+
+    useEffect(() => {
+        setTimeout(() => {
+            if(resultMessage) {
+                setResultMessage(false);
+                toggleNoteForm();
+            }
+        }, 2000)
+    }, [resultMessage, toggleNoteForm])
+
+    if (loading) {
+        return null;
+    }
+
+    const Notes = data.getAllNotes.map((note, index) => {
+        return (
+            <div className={classes.note} key={index}>
+                <h2 className="post_name">{note.theme}</h2>
+                <p className="post_content">{note.content}</p>
+                <p className={classes.post_published}>{note.category}</p>
+            </div>
+        );
+    });
+
     return (
-        <div className={classes.formContainer}>
-            <h1>My notes</h1>
-            <Form onSubmit={() => console.log('submit')}>
-                <div className={classes.formItem}>
-                    <label>{'Theme'}</label>
-                    <Input
-                        type="text"
-                        name="theme"
-                        placeholder='Note Theme'
-                    />
-                </div>
-                <div className={classes.formItem}>
-                    <label>{'Content'}</label>
-                    <TextArea
-                        type="text"
-                        name="content"
-                        placeholder='Note Content'
-                    />
-                </div>
-                <div className={classes.formItem}>
-                    <label>{'Category'}</label>
-                    <Select
-                        type="text"
-                        name="category"
-                        placeholder='Note Category'
-                    >
-                        <option value="ms">Default</option>
-                        <option value="m3">Model 3</option>
-                        <option value="mx">Model X</option>
-                    </Select>
-                </div>
-                <div className={`${classes.formItem} ${classes.formButton}`}>
-                    <button className={classes.blackBtn} type="submit">Add Note</button>
-                </div>
-            </Form>
-        </div>
+        <>
+            {resultMessage ? <h1 className={formClasses.resultTitle}>{resultMessage}</h1> :
+                <div className={classes.notesRoot}>
+                    <h1 className={classes.title}>My notes</h1>
+                    <div className={classes.tabs}>
+                        <button className={formClasses.blackBtn}>Default</button>
+                        <button className={formClasses.blackBtn}>Immediately</button>
+                        <button className={formClasses.blackBtn}>Can wait</button>
+                    </div>
+                    {Notes}
+                    {showNoteForm &&
+                        <AddNoteForm
+                            toggleNoteForm={toggleNoteForm}
+                            noteFormRef={noteFormRef}
+                            resultMessage={resultMessage}
+                            setResultMessage={setResultMessage}
+                        />}
+                    <div className={formClasses.formContainer}>
+                        <div className={`${formClasses.formItem} ${formClasses.formButton}`}>
+                            <button className={formClasses.blackBtn} onClick={toggleNoteForm}>Add Note</button>
+                        </div>
+                    </div>
+                </div>}
+        </>
     );
 }
 export default Notes;

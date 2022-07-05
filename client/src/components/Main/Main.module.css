@@ -22,9 +22,9 @@ a {
 .content {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 0 10rem;
+    padding: 2rem 10rem 0;
 }
-input, textarea, button {
+input, textarea, button, select, option {
     font-size: 16px;
     outline: unset;
     border: 0;
