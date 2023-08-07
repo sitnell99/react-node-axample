@@ -10,6 +10,7 @@ const Notes = () => {
 
     const {showModal: showNoteForm, toggleModal: toggleNoteForm, modalRef: noteFormRef} = useModal();
     const [resultMessage, setResultMessage] = useState(false);
+    const [sort, setSort] = useState('');
 
     const {data, loading} = useQuery(getAllNotes);
 
@@ -26,12 +27,17 @@ const Notes = () => {
         return null;
     }
 
-    const Notes = data.getAllNotes.map((note, index) => {
+    const sortNotes = !sort
+        ? data.getAllNotes
+        : data.getAllNotes.filter(note => note.category === sort);
+
+    const Notes = sortNotes.map((note, index) => {
         return (
             <div className={classes.note} key={index}>
                 <h2 className="post_name">{note.theme}</h2>
                 <p className="post_content">{note.content}</p>
                 <p className={classes.post_published}>{note.category}</p>
+                <button className={formClasses.blackBtnSmall}>Remove note</button>
             </div>
         );
     });
@@ -42,9 +48,32 @@ const Notes = () => {
                 <div className={classes.notesRoot}>
                     <h1 className={classes.title}>My notes</h1>
                     <div className={classes.tabs}>
-                        <button className={formClasses.blackBtn}>Default</button>
-                        <button className={formClasses.blackBtn}>Immediately</button>
-                        <button className={formClasses.blackBtn}>Can wait</button>
+                        <div className={classes.sortButtons}>
+                            <button
+                                onClick={() => setSort('default')}
+                                className={formClasses.blackBtn}
+                            >
+                                Default
+                            </button>
+                            <button
+                                onClick={() => setSort('immediately')}
+                                className={formClasses.blackBtn}
+                            >
+                                Immediately
+                            </button>
+                            <button
+                                onClick={() => setSort('can_wait')}
+                                className={formClasses.blackBtn}
+                            >
+                                Can wait
+                            </button>
+                        </div>
+                        <button
+                            onClick={() => setSort('')}
+                            className={formClasses.blackBtn}
+                        >
+                            Show All
+                        </button>
                     </div>
                     {Notes}
                     {showNoteForm &&

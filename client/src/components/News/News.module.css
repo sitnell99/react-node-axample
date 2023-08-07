@@ -8,3 +8,23 @@
 .title {
     text-align: center;
 }
+.tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+}
+.sortButtons {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+.note {
+    position: relative;
+}
+
+.note button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
