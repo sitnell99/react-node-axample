@@ -1,4 +1,4 @@
-import {Route, Switch, Redirect} from "react-router-dom";
+import {Route, Routes as Switch, Navigate} from "react-router-dom";
 import News from "../News";
 import LoginPage from "../LoginPage/LoginPage";
 import {useUserContext} from "../../context/UserContext";
@@ -11,13 +11,13 @@ const Routes = () =>  {
 
     return (
         <Switch>
-            <Route exact path={'/news'} component={News} />
-            <Route exact path={'/notes'} component={Notes} />
-            <Route exact path='/login' component={LoginPage}>
-                {isAuthorized && <Redirect to={'/'}/>}
+            <Route exact path={'/news'} element={<News />} />
+            <Route exact path={'/notes'} element={<Notes />} />
+            <Route exact path='/login' element={<LoginPage />}>
+                {isAuthorized && <Route path={'*'} element={<Navigate to={'/'} replace />}/>}
             </Route>
-            <Route exact path={'/cabinet'} component={Cabinet}>
-                {!isAuthorized && <Redirect to={'/'}/>}
+            <Route exact path={'/cabinet'} element={<Cabinet />}>
+                {!isAuthorized && <Route path={'*'} element={<Navigate to={'/'} replace />}/>}
             </Route>
         </Switch>
     )

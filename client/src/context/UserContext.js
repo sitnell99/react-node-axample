@@ -1,5 +1,5 @@
-import {createContext, useContext, useEffect, useMemo, useState} from 'react';
-import { useHistory } from "react-router-dom";
+import {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import { useNavigate } from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import getUserData from "../queries/getUserData";
 
@@ -7,9 +7,9 @@ const UserContext = createContext();
 
 const UserContextProvider = (props) => {
 
-    const { data, loading } = useQuery(getUserData);
+    const { data } = useQuery(getUserData);
 
-    const history = useHistory();
+    const history = useNavigate();
     const [user, setUser] = useState(null);
 
     const isAuthorized = user?.phone?.length > 0;
@@ -18,16 +18,16 @@ const UserContextProvider = (props) => {
         if (!isAuthorized && data) {
             console.log('data', data)
         }
-    }, [data])
+    }, [data, isAuthorized])
 
 
-    const logOutFunc = () => {
+    const logOutFunc = useCallback(() => {
         setUser(null);
         history.push('/login');
         localStorage.removeItem('token');
-    }
+    }, [history]);
 
-    const userContextInfo = useMemo(() => ({user, setUser, isAuthorized, logOutFunc}), [user, setUser]);
+    const userContextInfo = useMemo(() => ({user, setUser, isAuthorized, logOutFunc}), [user, setUser, logOutFunc, isAuthorized]);
 
     return (
         <UserContext.Provider value={userContextInfo}>

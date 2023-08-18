@@ -1,7 +1,6 @@
 import classes from './Navigation.module.css';
 import {useUserContext} from "../../context/UserContext";
 import {Link} from "react-router-dom";
-import MenuIcon from '@mui/icons-material/Menu';
 import {useModal} from "../../util/useModal";
 
 const Navigation = () => {
@@ -13,7 +12,9 @@ const Navigation = () => {
     return (
         <>
             <button className={classes.trigger} onClick={toggleMenu}>
-                <MenuIcon />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
                 {user.firstname}
             </button>
 

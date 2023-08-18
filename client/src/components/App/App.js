@@ -3,7 +3,7 @@ import {ApolloProvider} from "@apollo/client/react";
 import {BrowserRouter} from "react-router-dom";
 import Main from "../Main";
 import {onError} from "@apollo/client/link/error";
-import {createUploadLink} from "apollo-upload-client/public/index";
+import {createUploadLink} from "apollo-upload-client";
 import {setContext} from "@apollo/client/link/context";
 import UserContextProvider from "../../context/UserContext";
 

@@ -43,7 +43,7 @@ const SighUpForm = (props) => {
                 setDefaultForm(true);
             }
         }, 2000)
-    }, [resultMessage])
+    }, [resultMessage, setDefaultForm])
 
     if (!resultMessage) {
         return (
