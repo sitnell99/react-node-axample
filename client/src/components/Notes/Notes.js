@@ -5,26 +5,43 @@ import getAllNotes from "../../queries/getAllNotes";
 import classes from "../News/News.module.css";
 import formClasses from "../LoginPage/LoginPage.module.css";
 import {useState, useEffect} from "react";
+import {useUserContext} from "../../context/UserContext";
 
 const Notes = () => {
 
     const {showModal: showNoteForm, toggleModal: toggleNoteForm, modalRef: noteFormRef} = useModal();
     const [resultMessage, setResultMessage] = useState(false);
     const [sort, setSort] = useState('');
-
-    const {data, loading} = useQuery(getAllNotes);
+    const {user} = useUserContext();
+    const {data, loading, refetch: refetchNotes} = useQuery(getAllNotes, {
+        variables: {
+            authorId: user?.id
+        },
+        skip: !user?.id
+    });
+    console.log('noteData', data)
 
     useEffect(() => {
         setTimeout(() => {
             if(resultMessage) {
                 setResultMessage(false);
+                refetchNotes();
                 toggleNoteForm();
             }
         }, 2000)
-    }, [resultMessage, toggleNoteForm])
+    }, [resultMessage, toggleNoteForm, refetchNotes])
 
-    if (loading) {
+    if (loading || !data) {
         return null;
+    }
+
+    if (!data.getAllNotes) {
+        return <AddNoteForm
+            toggleNoteForm={toggleNoteForm}
+            noteFormRef={noteFormRef}
+            resultMessage={resultMessage}
+            setResultMessage={setResultMessage}
+        />
     }
 
     const sortNotes = !sort

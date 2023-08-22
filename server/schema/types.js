@@ -51,7 +51,7 @@ const GetUserDataType = new GraphQLObjectType({
 const PostsType = new GraphQLObjectType({
     name: 'PostsType',
     fields: () => ({
-        id: {type: GraphQLID},
+        id: {type: new GraphQLNonNull(GraphQLID)},
         name: {type: new GraphQLNonNull(GraphQLString)},
         published: {type: new GraphQLNonNull(GraphQLDate)},
         content: {type: new GraphQLNonNull(GraphQLString)},
@@ -61,7 +61,7 @@ const PostsType = new GraphQLObjectType({
 const NoteType = new GraphQLObjectType({
     name: 'NoteType',
     fields: () => ({
-        id: {type: GraphQLID},
+        authorId: {type: new GraphQLNonNull(GraphQLID)},
         theme: {type: new GraphQLNonNull(GraphQLString)},
         content: {type: new GraphQLNonNull(GraphQLString)},
         category: {type: new GraphQLNonNull(GraphQLString)}

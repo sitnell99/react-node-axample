@@ -2,20 +2,28 @@ import classes from "../LoginPage/LoginPage.module.css";
 import {Form, Input, TextArea, Select} from "informed";
 import {useMutation} from "@apollo/client";
 import AddNote from "../../mutations/addNote";
+import {useUserContext} from "../../context/UserContext";
 
 const AddNoteForm = props => {
 
     const { toggleNoteForm, noteFormRef, setResultMessage } = props;
     const [addNote] = useMutation(AddNote);
+    const {user} = useUserContext();
 
-    const handleAddNewUser = formValues => {
-
-        try {
-            addNote({variables: formValues.values});
-            setResultMessage('New note was successfully added');
-        } catch (error) {
-            console.log(error)
-            setResultMessage('error happends')
+    const handleAddNewNote = formValues => {
+        if(user?.id) {
+            try {
+                const {
+                    category,
+                    content,
+                    theme
+                } = formValues.values;
+                addNote({variables: { category, content, theme, authorId: user.id}});
+                setResultMessage('New note was successfully added');
+            } catch (error) {
+                console.log(error)
+                setResultMessage('error happends')
+            }
         }
     };
 
@@ -24,7 +32,7 @@ const AddNoteForm = props => {
             <div className={classes.formContainer} ref={noteFormRef}>
                 <button className={classes.closeBtn} onClick={toggleNoteForm}>x</button>
                 <h1>Add Note</h1>
-                <Form onSubmit={handleAddNewUser}>
+                <Form onSubmit={handleAddNewNote}>
                     <div className={classes.formItem}>
                         <label>{'Theme'}</label>
                         <Input

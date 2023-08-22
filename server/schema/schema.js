@@ -141,12 +141,14 @@ const Mutation = new GraphQLObjectType({
         addNote: {
             type: NoteType,
             args: {
+                authorId: {type: new GraphQLNonNull(GraphQLID)},
                 theme: {type: new GraphQLNonNull(GraphQLString)},
                 content: {type: new GraphQLNonNull(GraphQLString)},
-                category: {type: new GraphQLNonNull(GraphQLString)}
+                category: {type: new GraphQLNonNull(GraphQLString)},
             },
             resolve(parent, args) {
                 const notes = new Notes({
+                    authorId: args.authorId,
                     theme: args.theme,
                     content: args.content,
                     category: args.category
@@ -189,8 +191,11 @@ const Query = new GraphQLObjectType({
         },
         getAllNotes: {
             type: new GraphQLList(NoteType),
+            args: {
+                authorId: {type: new GraphQLNonNull(GraphQLID)}
+            },
             resolve(parent, args) {
-                return Notes.find({})
+                return Notes.find({"authorId": args.authorId})
             }
         },
     }

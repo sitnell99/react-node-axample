@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 const getAllNotes = gql`
-    query getAllNotes {
-        getAllNotes {
+    query getAllNotes($authorId: ID!) {
+        getAllNotes(authorId: $authorId) {
             theme
             content
             category
