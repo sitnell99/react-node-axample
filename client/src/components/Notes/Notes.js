@@ -1,7 +1,8 @@
 import AddNoteForm from "./AddNoteForm";
 import {useModal} from "../../util/useModal";
-import {useQuery} from "@apollo/client";
+import {useMutation, useQuery} from "@apollo/client";
 import getAllNotes from "../../queries/getAllNotes";
+import RemoveNote from "../../mutations/removeNote";
 import classes from "../News/News.module.css";
 import formClasses from "../LoginPage/LoginPage.module.css";
 import {useState, useEffect} from "react";
@@ -13,13 +14,13 @@ const Notes = () => {
     const [resultMessage, setResultMessage] = useState(false);
     const [sort, setSort] = useState('');
     const {user} = useUserContext();
+    const [removeNote] = useMutation(RemoveNote);
     const {data, loading, refetch: refetchNotes} = useQuery(getAllNotes, {
         variables: {
             authorId: user?.id
         },
         skip: !user?.id
     });
-    console.log('noteData', data)
 
     useEffect(() => {
         setTimeout(() => {
@@ -48,13 +49,30 @@ const Notes = () => {
         ? data.getAllNotes
         : data.getAllNotes.filter(note => note.category === sort);
 
+    const handleRemoveNote = noteId => {
+        if(noteId) {
+            try {
+                removeNote({variables: {id: noteId}})
+                setResultMessage('Note was successfully removed');
+            } catch (error) {
+                console.log(error)
+                setResultMessage('error happens')
+            }
+        }
+    };
+
     const Notes = sortNotes.map((note, index) => {
         return (
             <div className={classes.note} key={index}>
                 <h2 className="post_name">{note.theme}</h2>
                 <p className="post_content">{note.content}</p>
                 <p className={classes.post_published}>{note.category}</p>
-                <button className={formClasses.blackBtnSmall}>Remove note</button>
+                <button
+                    onClick={() => handleRemoveNote(note.id)}
+                    className={formClasses.blackBtnSmall}
+                >
+                    Remove note
+                </button>
             </div>
         );
     });

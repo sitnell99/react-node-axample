@@ -18,11 +18,16 @@ const AddNoteForm = props => {
                     content,
                     theme
                 } = formValues.values;
-                addNote({variables: { category, content, theme, authorId: user.id}});
+                addNote({variables: {
+                    category: category || 'default',
+                    content,
+                    theme,
+                    authorId: user.id
+                }});
                 setResultMessage('New note was successfully added');
             } catch (error) {
                 console.log(error)
-                setResultMessage('error happends')
+                setResultMessage('error happens')
             }
         }
     };

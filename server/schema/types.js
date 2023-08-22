@@ -61,6 +61,7 @@ const PostsType = new GraphQLObjectType({
 const NoteType = new GraphQLObjectType({
     name: 'NoteType',
     fields: () => ({
+        id: {type: new GraphQLNonNull(GraphQLID)},
         authorId: {type: new GraphQLNonNull(GraphQLID)},
         theme: {type: new GraphQLNonNull(GraphQLString)},
         content: {type: new GraphQLNonNull(GraphQLString)},
@@ -68,4 +69,11 @@ const NoteType = new GraphQLObjectType({
     })
 });
 
-module.exports = { PostsType, UserDataType, LogInType, SignUpType, NoteType, GetUserDataType};
+const RemoveNoteType = new GraphQLObjectType({
+    name: 'RemoveNoteType',
+    fields: () => ({
+        res: {type: GraphQLString}
+    })
+});
+
+module.exports = { PostsType, UserDataType, LogInType, SignUpType, NoteType, GetUserDataType, RemoveNoteType};
