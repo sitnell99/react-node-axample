@@ -34,13 +34,15 @@ const UserDataType = new GraphQLObjectType({
         lastname:{type: GraphQLString},
         birthdate: {type: GraphQLDate},
         phone: {type: GraphQLString},
-        password: {type: GraphQLString}
+        password: {type: GraphQLString},
+        token: {type: GraphQLString}
     })
 });
 
 const GetUserDataType = new GraphQLObjectType({
     name: 'GetUserDataType',
     fields: () => ({
+        id: {type: new GraphQLNonNull(GraphQLID)},
         firstname: {type: GraphQLString},
         lastname:{type: GraphQLString},
         birthdate: {type: GraphQLDate},

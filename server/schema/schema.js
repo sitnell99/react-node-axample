@@ -44,9 +44,14 @@ const Mutation = new GraphQLObjectType({
                     lastname: args.lastname,
                     birthdate: args.birthdate,
                     phone: args.phone,
-                    password: bcrypt.hashSync(args.password, bcrypt.genSaltSync())
+                    password: bcrypt.hashSync(args.password, bcrypt.genSaltSync()),
+                    token: ''
                 });
-                return user.save();
+                try {
+                    return user.save();
+                } catch (e) {
+                    throw new Error(e)
+                }
             }
         },
         logIn: {
@@ -57,15 +62,13 @@ const Mutation = new GraphQLObjectType({
                 lastname:{type: GraphQLString},
                 birthdate: {type: GraphQLDate},
                 phone: {type: new GraphQLNonNull(GraphQLString)},
-                password: {type: new GraphQLNonNull(GraphQLString)},
-                token: {type: GraphQLString}
+                password: {type: new GraphQLNonNull(GraphQLString)}
             },
             async resolve(parent, args) {
 
                 const user = await Users.findOne({phone: args.phone});
                 try {
                     if (user) {
-
                         if (user.phone !== args.phone) {
                             throw new Error('You are not registered')
                         }
@@ -80,7 +83,9 @@ const Mutation = new GraphQLObjectType({
                             {id: user.id},
                             process.env.JWT_SECRET_KEY,
                             {expiresIn: '1d'}
-                        )
+                        );
+
+                        await user.update({token});
 
                         return {
                             id: user.id,
@@ -192,9 +197,20 @@ const Query = new GraphQLObjectType({
         },
         getUserData: {
             type: GetUserDataType,
-            args: {id: {type: GraphQLID}},
-            resolve(parent, args) {
-                return Users.findById(args.id)
+            resolve(parent, args, contextValue) {
+                const token = contextValue.headers.authorization.split(' ')[1];
+                if(token) {
+                    try {
+                        jwt.verify(token, process.env.JWT_SECRET_KEY, function(err, decoded) {
+                            if (err) {
+                                throw new Error(err)
+                            }
+                        });
+                    } catch (e) {
+                        throw new Error(e)
+                    }
+                }
+                return Users.findOne({"token": token});
             }
         },
         getAllNotes: {

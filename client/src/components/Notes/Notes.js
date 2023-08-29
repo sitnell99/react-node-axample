@@ -82,7 +82,10 @@ const Notes = () => {
                 </div>
             );
         })
-        : <h1 className={classes.title}>There are no notes with this category yet.</h1>;
+        : (sort
+            ? <h1 className={classes.title}>There are no notes with this category yet.</h1>
+            : <h1 className={classes.title}>There are no notes yet.</h1>
+        );
 
     return (
         <>

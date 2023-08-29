@@ -1,31 +1,36 @@
 import {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import {useQuery} from "@apollo/client";
+import {useLazyQuery} from "@apollo/client";
 import getUserData from "../queries/getUserData";
 
 const UserContext = createContext();
 
 const UserContextProvider = (props) => {
 
-    const { data } = useQuery(getUserData);
+    const [getUserInfo, { data }] = useLazyQuery(getUserData, {
+        fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-first"
+    });
 
-    const history = useNavigate();
+    const navigate = useNavigate();
+
+    const token = localStorage.getItem('token');
+
     const [user, setUser] = useState(null);
 
     const isAuthorized = user?.phone?.length > 0;
 
     useEffect(() => {
-        if (!isAuthorized && data) {
-            console.log('data', data)
+        if (!isAuthorized && token) {
+            getUserInfo().then(() => data && setUser(data.getUserData));
         }
-    }, [data, isAuthorized])
-
+    }, [token, isAuthorized, data, getUserInfo])
 
     const logOutFunc = useCallback(() => {
         setUser(null);
-        history.push('/login');
+        navigate('/login');
         localStorage.removeItem('token');
-    }, [history]);
+    }, [navigate]);
 
     const userContextInfo = useMemo(() => ({user, setUser, isAuthorized, logOutFunc}), [user, setUser, logOutFunc, isAuthorized]);
 
