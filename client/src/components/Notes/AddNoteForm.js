@@ -24,6 +24,7 @@ const AddNoteForm = props => {
                     theme,
                     authorId: user.id
                 }});
+                toggleNoteForm();
                 setResultMessage('New note was successfully added');
             } catch (error) {
                 console.log(error)

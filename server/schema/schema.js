@@ -165,8 +165,7 @@ const Mutation = new GraphQLObjectType({
                 Notes.findByIdAndRemove({"_id": args.id}, (err, docs) => {
                     if (err){
                         return {res: err.toString()}
-                    }
-                    else{
+                    } else {
                         return {res: docs.toString()}
                     }
                 });

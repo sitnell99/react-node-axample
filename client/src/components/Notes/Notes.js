@@ -11,7 +11,7 @@ import {useUserContext} from "../../context/UserContext";
 const Notes = () => {
 
     const {showModal: showNoteForm, toggleModal: toggleNoteForm, modalRef: noteFormRef} = useModal();
-    const [resultMessage, setResultMessage] = useState(false);
+    const [resultMessage, setResultMessage] = useState('');
     const [sort, setSort] = useState('');
     const {user} = useUserContext();
     const [removeNote] = useMutation(RemoveNote);
@@ -24,12 +24,11 @@ const Notes = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            if(resultMessage) {
-                setResultMessage(false);
+            if (resultMessage) {
+                setResultMessage('');
                 refetchNotes();
-                toggleNoteForm();
             }
-        }, 2000)
+        }, 1500)
     }, [resultMessage, toggleNoteForm, refetchNotes])
 
     if (loading || !data) {
@@ -50,32 +49,40 @@ const Notes = () => {
         : data.getAllNotes.filter(note => note.category === sort);
 
     const handleRemoveNote = noteId => {
-        if(noteId) {
+        if (noteId) {
             try {
-                removeNote({variables: {id: noteId}})
+                removeNote({variables: {id: noteId}});
                 setResultMessage('Note was successfully removed');
             } catch (error) {
                 console.log(error)
-                setResultMessage('error happens')
+                setResultMessage('error happens');
             }
         }
     };
 
-    const Notes = sortNotes.map((note, index) => {
-        return (
-            <div className={classes.note} key={index}>
-                <h2 className="post_name">{note.theme}</h2>
-                <p className="post_content">{note.content}</p>
-                <p className={classes.post_published}>{note.category}</p>
-                <button
-                    onClick={() => handleRemoveNote(note.id)}
-                    className={formClasses.blackBtnSmall}
-                >
-                    Remove note
-                </button>
-            </div>
-        );
-    });
+    const removeAllFromCategory = notes => {
+        if (notes.length > 0) {
+            notes.forEach(note => handleRemoveNote(note.id));
+        }
+    };
+
+    const Notes = sortNotes.length > 0 ?
+        sortNotes.map((note, index) => {
+            return (
+                <div className={classes.note} key={index}>
+                    <h2 className="post_name">{note.theme}</h2>
+                    <p className="post_content">{note.content}</p>
+                    <p className={'text-end	 absolute bottom-0 right-0'}>{note.category}</p>
+                    <button
+                        onClick={() => handleRemoveNote(note.id)}
+                        className={formClasses.blackBtnSmall}
+                    >
+                        Remove note
+                    </button>
+                </div>
+            );
+        })
+        : <h1 className={classes.title}>There are no notes with this category yet.</h1>;
 
     return (
         <>
@@ -122,6 +129,13 @@ const Notes = () => {
                         <div className={`${formClasses.formItem} ${formClasses.formButton}`}>
                             <button className={formClasses.blackBtn} onClick={toggleNoteForm}>Add Note</button>
                         </div>
+                        {sort && sortNotes.length > 0 ?
+                            <div className={`${formClasses.formItem} ${formClasses.formButton}`}>
+                                <button className={formClasses.blackBtn}
+                                        onClick={() => removeAllFromCategory(sortNotes)}>Remove all
+                                </button>
+                            </div>
+                            : null}
                     </div>
                 </div>}
         </>
