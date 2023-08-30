@@ -12,13 +12,7 @@ export const useModal = () => {
         }
     }, [])
 
-    const toggleModal = () => {
-        if (showModal) {
-            setShowModal(false);
-        } else {
-            setShowModal(true)
-        }
-    }
+    const toggleModal = () => setShowModal(!showModal);
 
     const useEventListener = (type, listener) => {
         useEffect(() => {

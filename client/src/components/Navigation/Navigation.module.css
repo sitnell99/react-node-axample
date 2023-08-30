@@ -38,3 +38,7 @@
 .trigger svg {
     margin-right: 10px;
 }
+
+.navigationBlock ul.membersList li:first-of-type {
+    border-top: 0;
+}
