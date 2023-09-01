@@ -7,7 +7,7 @@ const UserContext = createContext();
 
 const UserContextProvider = (props) => {
 
-    const [getUserInfo, { data }] = useLazyQuery(getUserData, {
+    const [getUserInfo] = useLazyQuery(getUserData, {
         fetchPolicy: "cache-and-network",
         nextFetchPolicy: "cache-first"
     });
@@ -20,17 +20,23 @@ const UserContextProvider = (props) => {
 
     const isAuthorized = user?.phone?.length > 0;
 
-    useEffect(() => {
-        if (!isAuthorized && token) {
-            getUserInfo().then(() => data && setUser(data.getUserData));
-        }
-    }, [token, isAuthorized, data, getUserInfo])
-
     const logOutFunc = useCallback(() => {
         setUser(null);
         navigate('/login');
         localStorage.removeItem('token');
     }, [navigate]);
+
+    useEffect(() => {
+        if (!isAuthorized && token) {
+            getUserInfo().then((res) => {
+                if(res.error) {
+                    logOutFunc();
+                } else if(res.data) {
+                    setUser(res.data.getUserData);
+                }
+            });
+        }
+    }, [token, isAuthorized, getUserInfo, logOutFunc])
 
     const userContextInfo = useMemo(() => ({user, setUser, isAuthorized, logOutFunc}), [user, setUser, logOutFunc, isAuthorized]);
 
