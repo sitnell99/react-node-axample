@@ -42,3 +42,31 @@
 .navigationBlock ul.membersList li:first-of-type {
     border-top: 0;
 }
+
+.details {
+    transition: all .3s ease;
+    z-index: -1;
+}
+
+.navigationBlock ul.membersList .base {
+    cursor: pointer;
+    position: relative;
+}
+
+.navigationBlock .base:after {
+    content: '';
+    position: absolute;
+    right: 36px;
+    border-radius: 50%;
+    top: calc(50% - 5px);
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: #50C878;
+}
+
+.hideMember {
+    composes: hideNavigation;
+    height: 0;
+    padding: 0!important;
+}

@@ -3,6 +3,7 @@ import {useUserContext} from "../../context/UserContext";
 import {Link} from "react-router-dom";
 import {useModal} from "../../util/useModal";
 import {useState} from "react";
+import OtherMembers from "../OtherMembers";
 
 const Navigation = () => {
 
@@ -45,10 +46,7 @@ const Navigation = () => {
                         </button>
                     </li>
                     <ul className={`${classes.membersList} ${hideMembers} relative transition-all`}>
-                        <li>{'member1'}</li>
-                        <li>{'member1'}</li>
-                        <li>{'member1'}</li>
-                        <li>{'member1'}</li>
+                       <OtherMembers classes={classes} />
                     </ul>
                     <li>
                         <button onClick={logOutFunc}>Log Out</button>
