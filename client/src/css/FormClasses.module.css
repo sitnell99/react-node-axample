@@ -36,8 +36,13 @@
     width: 100%;
     max-width: 100%;
     min-width: 100%;
-    max-height: 400px;
+    max-height: 430px;
     min-height: 50px;
+}
+
+.formContainer .formItem textarea {
+    resize: none;
+    height: 100px;
 }
 
 .formItem input, .formItem textarea, .formItem select, .formItem option {
@@ -125,7 +130,7 @@
     word-break: break-all;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"].checkbox {
     /* removing default appearance */
     -webkit-appearance: none;
     appearance: none;
@@ -133,10 +138,25 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-input::before {
+input.checkbox::before {
     content: url("../components/Checkbox/img/before.svg");
 }
 
-input.checked::before {
+input.checkbox.checked::before {
     content: url("../components/Checkbox/img/beforeChecked.svg");
+}
+
+@media screen and (max-width: 767px) {
+    .formContainer {
+        padding: 0;
+        margin: 0;
+    }
+    .blackBtn {
+        padding: 8px;
+        border-radius: 20px;
+    }
+    .modalWindow .formContainer {
+        max-width: 90%;
+        padding: 1rem;
+    }
 }

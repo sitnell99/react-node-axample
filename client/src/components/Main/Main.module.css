@@ -30,3 +30,9 @@ input, textarea, button, select, option {
     outline: unset;
     border: 0;
 }
+
+@media screen and (max-width: 767px) {
+    .content {
+        padding: 2rem;
+    }
+}

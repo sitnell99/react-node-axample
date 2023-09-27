@@ -36,10 +36,12 @@ const AddPostForm = props => {
         <div className={classes.modalWindow}>
             <div className={classes.formContainer} ref={postFormRef}>
                 <button className={classes.closeBtn} onClick={togglePostForm}>x</button>
-                <h1>Add Post</h1>
+                <h1 className={'text-center text-2xl font-bold'}>
+                    {'Add Post'}
+                </h1>
                 <Form onSubmit={handleAddNewPost}>
                     <div className={classes.formItem}>
-                        <label>{'Title'}</label>
+                        <label className={'text-lg font-bold'}>{'Title'}</label>
                         <Input
                             required
                             type="text"
@@ -48,7 +50,7 @@ const AddPostForm = props => {
                         />
                     </div>
                     <div className={classes.formItem}>
-                        <label>{'Content'}</label>
+                        <label className={'text-lg font-bold'}>{'Content'}</label>
                         <TextArea
                             required
                             type="text"

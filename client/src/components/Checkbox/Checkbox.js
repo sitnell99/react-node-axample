@@ -9,7 +9,7 @@ const Checkbox = props => {
         <div className={'inline-flex'}>
             <label className={'flex items-start gap-2 cursor-pointer'}>
                 <input
-                    className={checked ? formClasses.checked : ''}
+                    className={`${formClasses.checkbox} ${checked ? formClasses.checked : ''}`}
                     onChange={() => setChecked(!checked)}
                     checked={checked}
                     type="checkbox"

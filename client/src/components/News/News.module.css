@@ -10,11 +10,13 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 16px;
+    padding-bottom: 2rem;
 }
 .sortButtons {
     display: flex;
     flex-direction: row;
     gap: 16px;
+    justify-content: center;
 }
 .note {
     position: relative;
@@ -25,4 +27,11 @@
     position: absolute;
     top: 0;
     right: 0;
+}
+
+@media screen and (max-width: 767px) {
+    .tabs {
+        flex-direction: column-reverse;
+        gap: 0;
+    }
 }

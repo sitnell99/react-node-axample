@@ -37,10 +37,12 @@ const AddNoteForm = props => {
         <div className={classes.modalWindow}>
             <div className={classes.formContainer} ref={noteFormRef}>
                 <button className={classes.closeBtn} onClick={toggleNoteForm}>x</button>
-                <h1>Add Note</h1>
+                <h1 className={'text-center text-2xl font-bold'}>
+                    {'Add Note'}
+                </h1>
                 <Form onSubmit={handleAddNewNote}>
                     <div className={classes.formItem}>
-                        <label>{'Theme'}</label>
+                        <label className={'text-lg font-bold'}>{'Theme'}</label>
                         <Input
                             required
                             type="text"
@@ -49,7 +51,7 @@ const AddNoteForm = props => {
                         />
                     </div>
                     <div className={classes.formItem}>
-                        <label>{'Content'}</label>
+                        <label className={'text-lg font-bold'}>{'Content'}</label>
                         <TextArea
                             required
                             type="text"
@@ -58,7 +60,7 @@ const AddNoteForm = props => {
                         />
                     </div>
                     <div className={classes.formItem}>
-                        <label>{'Category'}</label>
+                        <label className={'text-lg font-bold'}>{'Category'}</label>
                         <Select
                             type="text"
                             name="category"

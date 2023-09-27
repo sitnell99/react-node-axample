@@ -72,14 +72,14 @@ const Notes = () => {
         sortNotes.map((note, index) => {
             return (
                 <div className={classes.note} key={index}>
-                    <h2 className="post_name">{note.theme}</h2>
+                    <h2 className={'text-xl font-bold'}>{note.theme}</h2>
                     <p className="post_content">{note.content}</p>
                     <p className={'text-end	 absolute bottom-0 right-0'}>{note.category}</p>
                     <button
                         onClick={() => handleRemoveNote(note.id)}
                         className={formClasses.blackBtnSmall}
                     >
-                        Remove note
+                        {'Remove'}
                     </button>
                 </div>
             );
@@ -93,7 +93,7 @@ const Notes = () => {
         <>
             {resultMessage ? <h1 className={formClasses.resultTitle}>{resultMessage}</h1> :
                 <div className={classes.notesRoot}>
-                    <h1 className={classes.title}>My notes</h1>
+                    <h1 className={'text-center text-2xl font-bold'}>{'My notes'}</h1>
                     <div className={classes.tabs}>
                         <div className={classes.sortButtons}>
                             <button
