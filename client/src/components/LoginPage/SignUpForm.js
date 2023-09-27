@@ -1,4 +1,4 @@
-import classes from './LoginPage.module.css';
+import classes from "../../css/FormClasses.module.css";
 import {useMutation} from "@apollo/client";
 import AddNewUser from '../../mutations/addNewUser';
 import {Form, Input} from 'informed';

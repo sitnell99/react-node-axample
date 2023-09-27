@@ -65,8 +65,10 @@ const PostsType = new GraphQLObjectType({
     name: 'PostsType',
     fields: () => ({
         id: {type: new GraphQLNonNull(GraphQLID)},
-        name: {type: new GraphQLNonNull(GraphQLString)},
+        authorId: {type: new GraphQLNonNull(GraphQLID)},
+        authorName: {type: new GraphQLNonNull(GraphQLString)},
         published: {type: new GraphQLNonNull(GraphQLDate)},
+        title: {type: new GraphQLNonNull(GraphQLString)},
         content: {type: new GraphQLNonNull(GraphQLString)},
     })
 });

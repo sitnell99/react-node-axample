@@ -1,4 +1,4 @@
-import classes from './LoginPage.module.css';
+import classes from "../../css/FormClasses.module.css";
 import {useState} from "react";
 import {useMutation} from "@apollo/client";
 import LogIn from "../../mutations/LogIn";

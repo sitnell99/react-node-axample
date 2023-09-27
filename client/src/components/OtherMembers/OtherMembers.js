@@ -1,14 +1,31 @@
 import {useQuery} from "@apollo/client";
-import getOtherMembers from "../queries/getOtherMembers";
+import getOtherMembers from "../../queries/getOtherMembers";
 import {useState} from "react";
+import { ColorRing } from 'react-loader-spinner';
 
 const OtherMembers = props => {
 
     const { classes } = props;
 
-    const { data, loading } = useQuery(getOtherMembers);
+    const { data, loading } = useQuery(getOtherMembers, {
+        fetchPolicy: "cache-first",
+    });
 
     if (loading) {
+        return (
+            <ColorRing
+                visible={true}
+                height="80"
+                width="80"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="m-auto"
+                colors={['#000']}
+            />
+        );
+    }
+
+    if (!data) {
         return null;
     }
 

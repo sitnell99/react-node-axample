@@ -7,7 +7,7 @@ import OtherMembers from "../OtherMembers";
 
 const Navigation = () => {
 
-    const { showModal: openMenu, toggleModal: toggleMenu, modalRef: menuRef } = useModal();
+    const { showModal: openMenu, toggleModal: toggleMenu, modalRef: menuRef, triggerRef: triggerMenuRef } = useModal();
     const [showMembers, setShowMembers] = useState(false);
     const toggleMembers = () => setShowMembers(!showMembers);
 
@@ -20,10 +20,18 @@ const Navigation = () => {
 
     return (
         <>
-            <button className={classes.trigger} onClick={toggleMenu}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
+            <button className={classes.trigger} onClick={toggleMenu} ref={triggerMenuRef}>
+                {openMenu ?
+                    (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>)
+                    :
+                    (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                          stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round"
+                              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                    </svg>)
+                }
                 {user.firstname}
             </button>
             <div className={`${classes.navigationBlock} ${hideNavigation}`} ref={menuRef}>
@@ -46,7 +54,7 @@ const Navigation = () => {
                         </button>
                     </li>
                     <ul className={`${classes.membersList} ${hideMembers} relative transition-all`}>
-                       <OtherMembers classes={classes} />
+                        {showMembers && <OtherMembers classes={classes} />}
                     </ul>
                     <li>
                         <button onClick={logOutFunc}>Log Out</button>

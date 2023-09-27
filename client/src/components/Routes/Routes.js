@@ -11,6 +11,7 @@ const Routes = () =>  {
 
     return (
         <Switch>
+            <Route exact path={'/'} element={<News />} />
             <Route exact path={'/news'} element={<News />} />
             <Route exact path={'/notes'} element={<Notes />} />
             <Route exact path='/login' element={<LoginPage />}>

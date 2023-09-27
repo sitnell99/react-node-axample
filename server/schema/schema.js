@@ -16,15 +16,18 @@ const Mutation = new GraphQLObjectType({
         addPost: {
             type: PostsType,
             args: {
-                name: {type: new GraphQLNonNull(GraphQLString)},
-                published: {type: new GraphQLNonNull(GraphQLDate)},
+                authorName: {type: new GraphQLNonNull(GraphQLString)},
+                authorId: {type: new GraphQLNonNull(GraphQLID)},
+                title: {type: new GraphQLNonNull(GraphQLString)},
                 content: {type: new GraphQLNonNull(GraphQLString)},
             },
             resolve(parent, args) {
                 const post = new Posts({
-                    name: args.name,
-                    published: args.published,
-                    content: args.content
+                    authorName: args.authorName,
+                    authorId: args.authorId,
+                    content: args.content,
+                    title: args.title,
+                    published: new Date().toISOString()
                 });
                 return post.save();
             }
@@ -224,8 +227,14 @@ const Query = new GraphQLObjectType({
         },
         getOtherMembers: {
             type: new GraphQLList(OnlineUserDataType),
-            resolve() {
-                return Users.find({})
+            resolve(parent, args, contextValue) {
+                const token = contextValue.headers.authorization.split(' ')[1];
+                return Users.find({
+                    $and: [
+                        { token: { $ne: token } }, // token not equal current user token
+                        { token: { $ne: "" } } // token not empty
+                    ]
+                });
             }
         },
     }

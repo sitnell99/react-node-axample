@@ -42,6 +42,7 @@ export const useModal = () => {
         setShowModal,
         showModal,
         modalRef,
+        triggerRef,
         toggleModal
     }
 }

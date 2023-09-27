@@ -4,7 +4,7 @@ import {useMutation, useQuery} from "@apollo/client";
 import getAllNotes from "../../queries/getAllNotes";
 import RemoveNote from "../../mutations/removeNote";
 import classes from "../News/News.module.css";
-import formClasses from "../LoginPage/LoginPage.module.css";
+import formClasses from "../../css/FormClasses.module.css";
 import {useState, useEffect} from "react";
 import {useUserContext} from "../../context/UserContext";
 
@@ -16,6 +16,8 @@ const Notes = () => {
     const {user} = useUserContext();
     const [removeNote] = useMutation(RemoveNote);
     const {data, loading, refetch: refetchNotes} = useQuery(getAllNotes, {
+        fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-first",
         variables: {
             authorId: user?.id
         },

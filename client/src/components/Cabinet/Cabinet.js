@@ -1,4 +1,4 @@
-import classes from '../LoginPage/LoginPage.module.css';
+import classes from '../../css/FormClasses.module.css';
 import cabinetClasses from './Cabinet.module.css';
 import {Form, Input} from "informed";
 import {useFormValidation} from "../../util/useFormValidation";

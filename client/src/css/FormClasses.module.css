@@ -111,3 +111,32 @@
 .title {
     text-align: center;
 }
+
+.titleContainer {
+    max-width: 70%;
+}
+
+.textOverflow {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+}
+
+input[type="checkbox"] {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    cursor: pointer;
+}
+
+input::before {
+    content: url("../components/Checkbox/img/before.svg");
+}
+
+input.checked::before {
+    content: url("../components/Checkbox/img/beforeChecked.svg");
+}

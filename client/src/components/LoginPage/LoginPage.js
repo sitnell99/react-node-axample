@@ -1,7 +1,7 @@
 import {useState} from "react";
 import SighUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
-import classes from "./LoginPage.module.css";
+import classes from "../../css/FormClasses.module.css";
 
 const LoginPage = () => {
 
