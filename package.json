@@ -10,7 +10,7 @@
     "start": "nodemon app.js",
     "client start": "react-scripts start",
     "client build": "react-scripts build",
-    "build": "react-scripts build"
+    "build": "react-scripts build && @start"
   },
   "author": "Valentyn_Kuchak",
   "license": "ISC",
