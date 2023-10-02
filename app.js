@@ -7,7 +7,7 @@ require('dotenv').config();
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT;
 
 mongoose.connect(process.env.DB_URI, {
     useNewUrlParser:true,
