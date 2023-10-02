@@ -2,13 +2,16 @@
   "name": "app_server",
   "version": "1.0.0",
   "description": "roadmap_backend_part",
-  "main": "server/app.js",
+  "main": "app.js",
   "engines": {
     "npm": "9.8.1",
     "node": "16.20.1"
   },
   "scripts": {
-    "dev": "nodemon server/app.js"
+    "dev": "nodemon app.js",
+    "client start": "react-scripts start",
+    "client build": "react-scripts build",
+    "prod": "react-scripts build && nodemon server/app.js"
   },
   "author": "Valentyn_Kuchak",
   "license": "ISC",
@@ -18,11 +21,38 @@
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-graphql": "^0.12.0",
-    "graphql": "^16.5.0",
     "graphql-scalars": "^1.17.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.4",
     "nodemon": "^2.0.16",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "@apollo/client": "^3.8.1",
+    "apollo-boost": "^0.4.9",
+    "apollo-upload-client": "^17.0.0",
+    "autoprefixer": "^10.4.15",
+    "graphql": "^16.8.0",
+    "informed": "4.49.5",
+    "postcss": "^8.4.28",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-apollo": "^3.1.5",
+    "react-dom": "^18.2.0",
+    "react-loader-spinner": "^5.4.5",
+    "react-router": "^6.15.0",
+    "react-router-dom": "^6.15.0",
+    "react-scripts": "5.0.1",
+    "tailwindcss": "^3.3.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
