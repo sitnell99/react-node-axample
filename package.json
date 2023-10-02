@@ -1,10 +1,9 @@
 {
-  "name": "app_server",
+  "name": "react-node-example",
   "version": "1.0.0",
-  "description": "roadmap_backend_part",
   "main": "app.js",
   "engines": {
-    "npm": "9.8.1",
+    "yarn": "1.22.19",
     "node": "16.20.1"
   },
   "scripts": {
