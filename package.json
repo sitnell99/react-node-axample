@@ -7,10 +7,10 @@
     "node": "16.20.1"
   },
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "client start": "react-scripts start",
     "client build": "react-scripts build",
-    "build": "react-scripts build && nodemon app.js"
+    "build": "react-scripts build"
   },
   "author": "Valentyn_Kuchak",
   "license": "ISC",
