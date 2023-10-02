@@ -2,7 +2,11 @@
   "name": "app_server",
   "version": "1.0.0",
   "description": "roadmap_backend_part",
-  "main": "index.js",
+  "main": "server/app.js",
+  "engines": {
+    "npm": "9.8.1",
+    "node": "16.20.1"
+  },
   "scripts": {
     "dev": "nodemon server/app.js"
   },
