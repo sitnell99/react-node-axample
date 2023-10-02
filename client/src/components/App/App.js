@@ -7,12 +7,13 @@ import {createUploadLink} from "apollo-upload-client";
 import {setContext} from "@apollo/client/link/context";
 import UserContextProvider from "../../context/UserContext";
 
-window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__ = true
+window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__ = true;
+const PORT = process.env.PORT || 3005;
 
 const App = () => {
 
     const httpLink = createUploadLink({
-        uri: 'http://localhost:3005/graphql'
+        uri: `http://localhost:${PORT}/graphql`
     });
 
     const token = localStorage.getItem('token')

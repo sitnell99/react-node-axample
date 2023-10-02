@@ -4,6 +4,7 @@ const schema = require('../schema/schema');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3005;
@@ -19,6 +20,12 @@ app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: true
 }));
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 const dbConnect = mongoose.connection;
 dbConnect.on('error', err => console.log(`Connection error: ${err}`));
