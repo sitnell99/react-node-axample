@@ -8,12 +8,11 @@ import {setContext} from "@apollo/client/link/context";
 import UserContextProvider from "../../context/UserContext";
 
 window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__ = true;
-const PORT = process.env.PORT;
 
 const App = () => {
 
     const httpLink = createUploadLink({
-        uri: `http://localhost:${PORT}/graphql`
+        uri: `https://react-node-example-c55ef32c33e8.herokuapp.com/graphql`
     });
 
     const token = localStorage.getItem('token')
