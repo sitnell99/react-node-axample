@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 const SighUpForm = (props) => {
 
     const {switchButton, setDefaultForm} = props;
-    const [resultMessage, setResultMessage] = useState(false);
+    const [resultMessage, setResultMessage] = useState('');
     const {
         validatePhone,
         validatePassword,
@@ -21,16 +21,18 @@ const SighUpForm = (props) => {
 
     const [addNewUser] = useMutation(AddNewUser);
 
-    const handleAddNewUser = formValues => {
+    const handleAddNewUser = async formValues => {
         if (!hasAnyFieldError) {
             const signUpValues = {...formValues.values}
             const { password_confirm, ...rest } = signUpValues;
             try {
-                addNewUser({variables: rest});
-                setResultMessage('User was successfully added, please log in');
+                const response = await addNewUser({variables: rest});
+                if(response.data?.addNewUser) {
+                    setResultMessage('User was successfully added, please log in');
+                }
             } catch (error) {
-                console.log(error)
-                setResultMessage('error happends')
+                console.log(error);
+                setResultMessage(error.toString());
             }
         }
 

@@ -41,17 +41,22 @@ const Mutation = new GraphQLObjectType({
                 phone: {type: new GraphQLNonNull(GraphQLString)},
                 password: {type: new GraphQLNonNull(GraphQLString)}
             },
-            resolve(parent, args) {
-                const user = new Users({
-                    firstname: args.firstname,
-                    lastname: args.lastname,
-                    birthdate: args.birthdate,
-                    phone: args.phone,
-                    password: bcrypt.hashSync(args.password, bcrypt.genSaltSync()),
-                    token: ''
-                });
+            async resolve(parent, args) {
+                const existedUser = await Users.findOne({phone: args.phone});
                 try {
-                    return user.save();
+                    if(existedUser?.phone === args.phone) {
+                        throw new Error('You are already registered')
+                    } else {
+                        const user = new Users({
+                            firstname: args.firstname,
+                            lastname: args.lastname,
+                            birthdate: args.birthdate,
+                            phone: args.phone,
+                            password: bcrypt.hashSync(args.password, bcrypt.genSaltSync()),
+                            token: ''
+                        });
+                        return user.save();
+                    }
                 } catch (e) {
                     throw new Error(e)
                 }
