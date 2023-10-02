@@ -8,7 +8,7 @@ import {setContext} from "@apollo/client/link/context";
 import UserContextProvider from "../../context/UserContext";
 
 window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__ = true;
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 5001;
 
 const App = () => {
 
