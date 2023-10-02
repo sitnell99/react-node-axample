@@ -6,12 +6,14 @@ import {useUserContext} from "../../context/UserContext";
 import {useMutation} from "@apollo/client";
 import UpdateUserData from "../../mutations/updateUserData";
 import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Cabinet = () => {
 
     const {user, setUser} = useUserContext();
     const [updateUserData] = useMutation(UpdateUserData);
     const [resultMessage, setResultMessage] = useState('');
+    const navigate = useNavigate();
 
     const {
         validatePassword,
@@ -49,6 +51,10 @@ const Cabinet = () => {
             }
         }, 2000)
     }, [resultMessage])
+
+    if(!user) {
+        return navigate('/');
+    }
 
     if (!resultMessage) {
         return (

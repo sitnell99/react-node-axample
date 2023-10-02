@@ -31,7 +31,7 @@ const UserContextProvider = (props) => {
             getUserInfo().then((res) => {
                 if(res.error) {
                     logOutFunc();
-                } else if(res.data) {
+                } else if(!res.loading && res.data) {
                     setUser(res.data.getUserData);
                 }
             });
