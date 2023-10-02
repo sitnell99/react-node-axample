@@ -29,10 +29,6 @@
     right: 0;
 }
 
-.note h2, .note .post_content {
-    padding-right: 100px;
-}
-
 @media screen and (max-width: 767px) {
     .tabs {
         flex-direction: column-reverse;

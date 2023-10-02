@@ -72,8 +72,8 @@ const Notes = () => {
         sortNotes.map((note, index) => {
             return (
                 <div className={classes.note} key={index}>
-                    <h2 className={'text-xl font-bold'}>{note.theme}</h2>
-                    <p className="post_content">{note.content}</p>
+                    <h2 className={'text-xl font-bold pr-24 pb-3'}>{note.theme}</h2>
+                    <p className={'pr-24'}>{note.content}</p>
                     <p className={'text-end	 absolute bottom-0 right-0'}>{note.category}</p>
                     <button
                         onClick={() => handleRemoveNote(note.id)}
