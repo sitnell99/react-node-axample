@@ -22,7 +22,7 @@ a {
 .content {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 2rem 10rem 0;
+    padding: 2rem 10rem 3rem;
     min-height: calc(100vh - 100px);
 }
 input, textarea, button, select, option {

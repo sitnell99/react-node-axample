@@ -2,6 +2,7 @@ import {useQuery} from "@apollo/client";
 import getOtherMembers from "../../queries/getOtherMembers";
 import {useState} from "react";
 import { ColorRing } from 'react-loader-spinner';
+import {useUserContext} from "../../context/UserContext";
 
 const OtherMembers = props => {
 
@@ -10,6 +11,8 @@ const OtherMembers = props => {
     const { data, loading } = useQuery(getOtherMembers, {
         fetchPolicy: "cache-first",
     });
+
+    const { user } = useUserContext();
 
     if (loading) {
         return (
@@ -58,7 +61,7 @@ const OtherMembers = props => {
         )
     }
 
-    return data.getOtherMembers.map((member, index) => <Member member={member} key={index}/>);
+    return data.getOtherMembers.filter(member => member.id !== user.id).map((member, index) => <Member member={member} key={index}/>);
 }
 
 export default OtherMembers;

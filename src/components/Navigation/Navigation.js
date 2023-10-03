@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {useModal} from "../../util/useModal";
 import {useState} from "react";
 import OtherMembers from "../OtherMembers";
+import {isMobile} from 'react-device-detect';
 
 const Navigation = () => {
 
@@ -32,7 +33,7 @@ const Navigation = () => {
                               d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
                     </svg>)
                 }
-                {user.firstname}
+                {!isMobile && user.firstname}
             </button>
             <div className={`${classes.navigationBlock} ${hideNavigation}`} ref={menuRef}>
                 <ul>

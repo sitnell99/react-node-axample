@@ -36,7 +36,7 @@ const SignInForm = (props) => {
     if (!resultMessage) {
         return (
         <div className={classes.formContainer}>
-                <h1>Sign In</h1>
+                <h1 className={'text-xl font-bold pb-3'}>Sign In</h1>
                 <Form onSubmit={handleLogIn}>
                     <div className={classes.formItem}>
                         <Input

@@ -3,12 +3,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding: 20px 50px 50px;
     border-radius: 10px;
     background-color: #fff;
     z-index: 2;
     max-width: 700px;
-    margin: 20px auto;
+    margin: auto;
 }
 
 .formContainer .formItem button {
@@ -36,8 +36,14 @@
     width: 100%;
     max-width: 100%;
     min-width: 100%;
-    max-height: 430px;
     min-height: 50px;
+}
+
+.formContainer .formItem input,
+.formContainer .formItem textarea,
+.formContainer .formItem select,
+.formContainer .formItem option {
+    max-height: 430px;
 }
 
 .formContainer .formItem textarea {
@@ -106,6 +112,7 @@
     width: 100%;
     max-width: 50%;
     position: relative;
+    padding-top: 50px;
 }
 .closeBtn {
     position: absolute;
@@ -149,7 +156,6 @@ input.checkbox.checked::before {
 @media screen and (max-width: 767px) {
     .formContainer {
         padding: 0;
-        margin: 0;
     }
     .blackBtn {
         padding: 8px;

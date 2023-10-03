@@ -7,6 +7,7 @@ import classes from "../News/News.module.css";
 import formClasses from "../../css/FormClasses.module.css";
 import {useState, useEffect} from "react";
 import {useUserContext} from "../../context/UserContext";
+import {Navigate} from "react-router-dom";
 
 const Notes = () => {
 
@@ -32,6 +33,10 @@ const Notes = () => {
             }
         }, 1500)
     }, [resultMessage, toggleNoteForm, refetchNotes])
+
+    if(!user) {
+        return <Navigate to={'/'}/>;
+    }
 
     if (loading || !data) {
         return null;
@@ -93,7 +98,7 @@ const Notes = () => {
         <>
             {resultMessage ? <h1 className={formClasses.resultTitle}>{resultMessage}</h1> :
                 <div className={classes.notesRoot}>
-                    <h1 className={'text-center text-2xl font-bold'}>{'My notes'}</h1>
+                    <h1 className={'text-center text-2xl font-bold pb-6'}>{'My notes'}</h1>
                     <div className={classes.tabs}>
                         <div className={classes.sortButtons}>
                             <button

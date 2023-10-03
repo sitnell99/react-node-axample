@@ -13,7 +13,6 @@ const Main = () => {
     return (
         <main className={classes.container}>
             <Header />
-            { isAuthorized && <Navigation />}
             <div className={classes.content}>
                 <Routes />
             </div>

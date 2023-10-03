@@ -6,14 +6,13 @@ import {useUserContext} from "../../context/UserContext";
 import {useMutation} from "@apollo/client";
 import UpdateUserData from "../../mutations/updateUserData";
 import {useState, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 
 const Cabinet = () => {
 
     const {user, setUser} = useUserContext();
     const [updateUserData] = useMutation(UpdateUserData);
     const [resultMessage, setResultMessage] = useState('');
-    const navigate = useNavigate();
 
     const {
         validatePassword,
@@ -53,16 +52,16 @@ const Cabinet = () => {
     }, [resultMessage])
 
     if(!user) {
-        return navigate('/');
+        return <Navigate to={'/'}/>;
     }
 
     if (!resultMessage) {
         return (
             <div className={classes.formContainer}>
-                <h1>User information</h1>
+                <h1 className={'text-2xl font-bold pb-4'}>User information</h1>
                 <Form onSubmit={handleEditInformation}>
                     <div className={`${classes.formItem} ${cabinetClasses.disabled}`}>
-                        <label>{'Phone number'}</label>
+                        <label className={'text-lg font-bold'}>{'Phone number'}</label>
                         <Input
                             type="text"
                             name="phone"
@@ -71,7 +70,7 @@ const Cabinet = () => {
                         />
                     </div>
                     <div className={classes.formItem}>
-                        <label>{'Firstname'}</label>
+                        <label className={'text-lg font-bold'}>{'Firstname'}</label>
                         <Input
                             type="text"
                             name="firstname"
@@ -81,7 +80,7 @@ const Cabinet = () => {
                         />
                     </div>
                     <div className={classes.formItem}>
-                        <label>{'Lastname'}</label>
+                        <label className={'text-lg font-bold'}>{'Lastname'}</label>
                         <Input
                             type="text"
                             name="lastname"
@@ -91,7 +90,7 @@ const Cabinet = () => {
                         />
                     </div>
                     <div className={classes.formItem}>
-                        <label>{'Birthdate'}</label>
+                        <label className={'text-lg font-bold'}>{'Birthdate'}</label>
                         <Input
                             type="date"
                             name="birthdate"
@@ -101,7 +100,7 @@ const Cabinet = () => {
                         />
                     </div>
                     <div className={classes.formItem}>
-                        <label>{'Password'}</label>
+                        <label className={'text-lg font-bold'}>{'Password'}</label>
                         <Input
                             type="password"
                             name="password"
@@ -112,7 +111,7 @@ const Cabinet = () => {
                             <small>{'A password must contain at least 3 of the following: lowercase, uppercase, digits, special characters.'}</small>}
                     </div>
                     <div className={classes.formItem}>
-                        <label>{'Confirm password'}</label>
+                        <label className={'text-lg font-bold'}>{'Confirm password'}</label>
                         <Input
                             type="password"
                             name="password_confirm"

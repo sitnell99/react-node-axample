@@ -50,7 +50,7 @@ const SighUpForm = (props) => {
     if (!resultMessage) {
         return (
             <div className={classes.formContainer}>
-                <h1>Sign Up</h1>
+                <h1 className={'text-xl font-bold pb-3'}>Sign Up</h1>
                 <Form onSubmit={handleAddNewUser}>
                     <div className={classes.formItem}>
                         <Input

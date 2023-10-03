@@ -39,17 +39,6 @@ const UserDataType = new GraphQLObjectType({
     })
 });
 
-const OnlineUserDataType = new GraphQLObjectType({
-    name: 'OnlineUserDataType',
-    fields: () => ({
-        firstname: {type: GraphQLString},
-        lastname:{type: GraphQLString},
-        birthdate: {type: GraphQLDate},
-        phone: {type: GraphQLString},
-    })
-});
-
-
 const GetUserDataType = new GraphQLObjectType({
     name: 'GetUserDataType',
     fields: () => ({
@@ -91,4 +80,4 @@ const RemoveNoteType = new GraphQLObjectType({
     })
 });
 
-module.exports = { PostsType, UserDataType, LogInType, SignUpType, NoteType, GetUserDataType, RemoveNoteType, OnlineUserDataType };
+module.exports = { PostsType, UserDataType, LogInType, SignUpType, NoteType, GetUserDataType, RemoveNoteType };

@@ -7,6 +7,7 @@ const getOtherMembers = gql`
             lastname
             birthdate
             phone
+            id
         }
     }
 `;

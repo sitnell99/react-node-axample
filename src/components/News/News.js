@@ -85,7 +85,7 @@ const News = () => {
 
     if(pageView === 'default') {
         return (
-            <div className={'flex flex-col gap-8'}>
+            <div className={'flex flex-col gap-8 pb-10'}>
                 <h1 className={'text-center text-2xl font-bold'}>Posts</h1>
                 <div className={'flex flex-col gap-4'}>
                     <div className={'flex justify-between'}>

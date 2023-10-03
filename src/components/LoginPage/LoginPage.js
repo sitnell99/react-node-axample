@@ -2,19 +2,18 @@ import {useState} from "react";
 import SighUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 import classes from "../../css/FormClasses.module.css";
+import {Navigate} from "react-router-dom";
 import {useUserContext} from "../../context/UserContext";
-import {useNavigate} from "react-router-dom";
 
 const LoginPage = () => {
 
-    const { isAuthorized } = useUserContext();
-    const navigate = useNavigate();
+    const [defaultForm, setDefaultForm] = useState(true);
+    const {isAuthorized} = useUserContext();
 
     if(isAuthorized) {
-        return navigate('/');
+        return <Navigate to={'/'}/>;
     }
 
-    const [defaultForm, setDefaultForm] = useState(true);
     const toggle = () => {
         if(defaultForm) {
             setDefaultForm(false);

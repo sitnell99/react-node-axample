@@ -13,7 +13,9 @@ const Routes = () =>  {
         <Switch>
             <Route exact path={'/'} element={<News />} />
             <Route exact path={'/news'} element={<News />} />
-            <Route exact path={'/notes'} element={<Notes />} />
+            <Route exact path={'/notes'} element={<Notes />}>
+                {!isAuthorized && <Route path={'*'} element={<Navigate to={'/'} replace />}/>}
+            </Route>
             <Route exact path='/login' element={<LoginPage />}>
                 {isAuthorized && <Route path={'*'} element={<Navigate to={'/'} replace />}/>}
             </Route>
