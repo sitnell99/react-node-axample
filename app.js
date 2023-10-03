@@ -6,6 +6,9 @@ const cors = require('cors');
 require('dotenv').config();
 const path = require('path');
 
+// To prevent warning in console
+mongoose.set('strictQuery', true);
+
 const app = express();
 const PORT = process.env.PORT;
 

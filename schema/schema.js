@@ -93,7 +93,7 @@ const Mutation = new GraphQLObjectType({
                             {expiresIn: '1d'}
                         );
 
-                        await user.update({token});
+                        await user.updateOne({token});
 
                         return {
                             id: user.id,
