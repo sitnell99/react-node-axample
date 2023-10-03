@@ -7,7 +7,7 @@
     top: 50px;
     left: 0;
     height: calc(100% - 100px);
-    z-index: 1;
+    z-index: 2;
     visibility: visible;
     transform: translateX(0);
     opacity: 1;
@@ -17,6 +17,7 @@
     opacity: 0;
     transform: translateX(-100px);
     transition: all .3s ease;
+    z-index: -1;
 }
 .navigationBlock ul {
     padding-left: 0;

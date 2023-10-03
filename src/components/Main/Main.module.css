@@ -24,6 +24,8 @@ a {
     margin: 0 auto;
     padding: 2rem 10rem 3rem;
     min-height: calc(100vh - 100px);
+    z-index: 1;
+    position: relative;
 }
 input, textarea, button, select, option {
     font-size: 16px;
