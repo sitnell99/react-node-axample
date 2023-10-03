@@ -15,7 +15,7 @@ const Navigation = props => {
     const hideNavigation = !openMenu ? classes.hideNavigation : '';
     const hideMembers =
         showMembers
-            ? 'translate-y-0 opacity-100 visible h-16rem overflow-y-scroll'
+            ? 'translate-y-0 opacity-100 visible'
             : '-translate-y-36 opacity-0 invisible -z-10 h-0';
 
     return (
