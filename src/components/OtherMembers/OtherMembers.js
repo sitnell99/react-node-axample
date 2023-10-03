@@ -1,8 +1,8 @@
 import {useQuery} from "@apollo/client";
 import getOtherMembers from "../../queries/getOtherMembers";
-import {useState} from "react";
 import { ColorRing } from 'react-loader-spinner';
 import {useUserContext} from "../../context/UserContext";
+import {useModal} from "../../util/useModal";
 
 const OtherMembers = props => {
 
@@ -33,29 +33,28 @@ const OtherMembers = props => {
     }
 
     const Member = ({member}) => {
-        const [showMember, setShowMember] = useState(false);
-        const toggleMember = () => setShowMember(!showMember);
+        const { showModal: showMember, toggleModal: toggleMember, modalRef: memberRef, triggerRef: triggerMemberRef } = useModal();
         const hideMember = !showMember ? classes.hideMember : '';
         return (
             <>
-                <li onClick={toggleMember} className={classes.base}>
+                <li onClick={toggleMember} ref={triggerMemberRef} className={classes.base}>
                     {`${member.firstname} ${member.lastname}`}
                 </li>
-                <li className={`${hideMember} ${classes.details}`}>
+                <li className={`${hideMember} ${classes.details}`} ref={memberRef}>
                     {member.birthdate
-                        ? (<>
-                            <div>Birthdate:</div>
-                            <span>{member.birthdate}</span>
-                        </>)
-                        : null
-                    }
+                        ? (
+                            <>
+                                <div>Birthdate:</div>
+                                <span>{member.birthdate}</span>
+                            </>
+                        ) : null}
                     {member.phone
-                        ? (<>
-                            <div>Phone:</div>
-                            <span>{member.phone}</span>
-                        </>)
-                        : null
-                    }
+                        ? (
+                            <>
+                                <div>Phone:</div>
+                                <span>{member.phone}</span>
+                            </>
+                        ) : null}
                 </li>
             </>
         )
