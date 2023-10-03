@@ -12,7 +12,7 @@ window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__ = true;
 const App = () => {
 
     const httpLink = createUploadLink({
-        uri: `http://localhost:3007/graphql`
+        uri: `https://react-node-example-c55ef32c33e8.herokuapp.com/graphql`
     });
 
     const token = localStorage.getItem('token')
