@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/client": "^3.8.1",
+    "@reduxjs/toolkit": "^2.2.1",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.3",
     "@types/react": "^18.2.42",
@@ -42,6 +43,7 @@
     "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-loader-spinner": "^5.4.5",
+    "react-redux": "^9.1.0",
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",

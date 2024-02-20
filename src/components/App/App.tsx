@@ -7,6 +7,8 @@ import {createUploadLink} from "apollo-upload-client";
 import {setContext} from "@apollo/client/link/context";
 import UserContextProvider from "../../context/UserContext";
 import React, {FC} from "react";
+import {Provider as ReduxProvider} from "react-redux";
+import store from '../../store';
 
 const App: FC = () => {
 
@@ -47,9 +49,11 @@ const App: FC = () => {
 
     return (
         <ApolloProvider client={client}>
-            <BrowserRouter>
-                <UserContextProvider children={<Main/>}/>
-            </BrowserRouter>
+            <ReduxProvider store={store}>
+                <BrowserRouter>
+                    <UserContextProvider children={<Main/>}/>
+                </BrowserRouter>
+            </ReduxProvider>
         </ApolloProvider>
     );
 }

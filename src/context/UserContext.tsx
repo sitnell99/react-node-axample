@@ -2,6 +2,7 @@ import React, {createContext, useCallback, useContext, useEffect, useMemo, useSt
 import { useNavigate } from "react-router-dom";
 import {useLazyQuery} from "@apollo/client";
 import getUserData from "../queries/getUserData";
+import {useDispatch} from "react-redux";
 
 const UserContext = createContext(null);
 
@@ -12,11 +13,21 @@ const UserContextProvider = ({children}) => {
         nextFetchPolicy: "cache-first"
     });
 
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
 
     const token: string = localStorage.getItem('token');
 
-    const [user, setUser] = useState(null);
+    type userInfo = {
+        id: string
+        birthdate: string
+        firstname: string
+        lastname: string
+        phone: string
+    }
+
+    const [user, setUser] = useState<userInfo>(null);
 
     const isAuthorized: boolean = user?.phone?.length > 0;
 
@@ -29,25 +40,27 @@ const UserContextProvider = ({children}) => {
     useEffect(() => {
         if (!isAuthorized && token) {
             getUserInfo().then((res): void => {
-                if(res.error) {
+                const {error, loading, data: {getUserData: {__typename, ...rest}} } = res;
+                if(error) {
                     logOutFunc();
-                } else if(!res.loading && res.data) {
-                    setUser(res.data.getUserData);
+                } else if(!loading && rest) {
+                    setUser(rest);
+                    dispatch({type: 'user/initUser', payload: rest})
                 }
             });
         }
     }, [token, isAuthorized, getUserInfo, logOutFunc])
 
-    type UserInfo = {
+    type UserContext = {
         user: object,
         setUser: React.Dispatch<any>,
         logOutFunc: () => void,
         isAuthorized: boolean
     }
 
-    const userContextInfo: UserInfo = useMemo(() => (
-        {user, setUser, isAuthorized, logOutFunc})
-    , [user, setUser, logOutFunc, isAuthorized]);
+    const userContextInfo: UserContext = useMemo(() => (
+        {user, setUser, isAuthorized, logOutFunc}
+    ), [user, setUser, logOutFunc, isAuthorized]);
 
     return (
         <UserContext.Provider value={userContextInfo}>
