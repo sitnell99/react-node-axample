@@ -3,12 +3,19 @@ import {useMutation} from "@apollo/client";
 import AddNewUser from '../../mutations/addNewUser';
 import {Form, Input} from 'informed';
 import {useFormValidation} from "../../util/useFormValidation";
-import {useEffect, useState} from "react";
+import {Dispatch, FC, ReactElement, SetStateAction, useEffect, useState} from "react";
+import {resultMessages} from "../../types/resultMessages";
 
-const SighUpForm = (props) => {
+type signUpFormProps = {
+    switchButton: ReactElement,
+    setDefaultForm: Dispatch<SetStateAction<boolean>>
+}
+const SighUpForm: FC = (props: signUpFormProps) => {
 
     const {switchButton, setDefaultForm} = props;
-    const [resultMessage, setResultMessage] = useState('');
+
+    const [resultMessage, setResultMessage] = useState<resultMessages>(resultMessages.empty);
+
     const {
         validatePhone,
         validatePassword,
@@ -28,7 +35,7 @@ const SighUpForm = (props) => {
             try {
                 const response = await addNewUser({variables: rest});
                 if(response.data?.addNewUser) {
-                    setResultMessage('User was successfully added, please log in');
+                    setResultMessage(resultMessages.userAdded);
                 }
             } catch (error) {
                 console.log(error);
@@ -41,7 +48,7 @@ const SighUpForm = (props) => {
     useEffect(() => {
         setTimeout(() => {
             if(resultMessage) {
-                setResultMessage(false)
+                setResultMessage(resultMessages.empty)
                 setDefaultForm(true);
             }
         }, 2000)

@@ -8,7 +8,13 @@ import {useModal} from "../../util/useModal";
 const Header = () => {
 
     const { isAuthorized } = useUserContext();
-    const { showModal: openMenu, toggleModal: toggleMenu, modalRef: menuRef, triggerRef: triggerMenuRef } = useModal();
+
+    const {
+        showModal: openMenu,
+        toggleModal: toggleMenu,
+        modalRef: menuRef,
+        triggerRef: triggerMenuRef
+    } = useModal();
 
     return (
         <>

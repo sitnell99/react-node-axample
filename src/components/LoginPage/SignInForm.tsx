@@ -1,16 +1,21 @@
 import classes from "../../css/FormClasses.module.css";
-import {useState} from "react";
+import {ReactElement, useState} from "react";
 import {useMutation} from "@apollo/client";
 import LogIn from "../../mutations/LogIn";
 import {Form, Input} from 'informed';
 import {useFormValidation} from "../../util/useFormValidation";
 import {useUserContext} from "../../context/UserContext";
+import {resultMessages} from "../../types/resultMessages";
 
-const SignInForm = (props) => {
+type signInFormProps = {
+    switchButton: ReactElement
+}
+export const SignInForm = (props: signInFormProps) => {
 
     const { switchButton } = props;
     const {setUser} = useUserContext();
-    const [resultMessage, setResultMessage] = useState('');
+
+    const [resultMessage, setResultMessage] = useState<resultMessages>(resultMessages.empty);
     const [logIn, {error: mutationError}] = useMutation(LogIn);
 
     const {
@@ -27,7 +32,7 @@ const SignInForm = (props) => {
                 localStorage.setItem('token', response.data.logIn.token)
                 await setUser(response.data.logIn)
             }
-             setResultMessage('You are successfully logged in');
+             setResultMessage(resultMessages.successSignIn);
         } catch (e) {
             console.log(e)
         }

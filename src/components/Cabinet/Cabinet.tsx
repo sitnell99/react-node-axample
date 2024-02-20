@@ -5,14 +5,16 @@ import {useFormValidation} from "../../util/useFormValidation";
 import {useUserContext} from "../../context/UserContext";
 import {useMutation} from "@apollo/client";
 import UpdateUserData from "../../mutations/updateUserData";
-import {useState, useEffect} from "react";
+import {useState, useEffect, FC} from "react";
 import {Navigate} from "react-router-dom";
+import {resultMessages} from "../../types/resultMessages";
 
-const Cabinet = () => {
+const Cabinet: FC = () => {
 
     const {user, setUser} = useUserContext();
     const [updateUserData] = useMutation(UpdateUserData);
-    const [resultMessage, setResultMessage] = useState('');
+
+    const [resultMessage, setResultMessage] = useState<resultMessages>(resultMessages.empty);
 
     const {
         validatePassword,
@@ -33,10 +35,10 @@ const Cabinet = () => {
                 if (response.data?.updateUserData) {
                     await setUser(response.data.updateUserData)
                 }
-                setResultMessage('Information was updated');
+                setResultMessage(resultMessages.updatedInfo);
                 setHasAnyFieldChanges(false);
             } else {
-                setResultMessage('You need to change some information');
+                setResultMessage(resultMessages.changeInfo);
             }
         } catch (e) {
             console.log(e)
@@ -46,7 +48,7 @@ const Cabinet = () => {
     useEffect(() => {
         setTimeout(() => {
             if (resultMessage) {
-                setResultMessage('')
+                setResultMessage(resultMessages.empty)
             }
         }, 2000)
     }, [resultMessage])

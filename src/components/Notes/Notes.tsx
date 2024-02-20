@@ -5,7 +5,7 @@ import getAllNotes from "../../queries/getAllNotes";
 import RemoveNote from "../../mutations/removeNote";
 import classes from "../News/News.module.css";
 import formClasses from "../../css/FormClasses.module.css";
-import {useState, useEffect} from "react";
+import {useState, useEffect, FC, ReactElement} from "react";
 import {useUserContext} from "../../context/UserContext";
 import {Navigate} from "react-router-dom";
 
@@ -44,6 +44,7 @@ const Notes = () => {
 
     if (!data.getAllNotes) {
         return <AddNoteForm
+            // @ts-ignore
             toggleNoteForm={toggleNoteForm}
             noteFormRef={noteFormRef}
             resultMessage={resultMessage}
@@ -130,11 +131,13 @@ const Notes = () => {
                     {Notes}
                     {showNoteForm &&
                         <AddNoteForm
+                            // @ts-ignore
                             toggleNoteForm={toggleNoteForm}
                             noteFormRef={noteFormRef}
                             resultMessage={resultMessage}
                             setResultMessage={setResultMessage}
-                        />}
+                        />
+                    }
                     <div className={formClasses.formContainer}>
                         <div className={`${formClasses.formItem} ${formClasses.formButton}`}>
                             <button className={formClasses.blackBtn} onClick={toggleNoteForm}>Add Note</button>

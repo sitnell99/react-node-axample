@@ -2,12 +2,12 @@ import {useState} from "react";
 
 export const useFormValidation = () => {
 
-    const [phoneNumberError, setPhoneNumberError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-    const [currentPassword, setCurrentPassword] = useState('');
-    const [hasAnyFieldChanges, setHasAnyFieldChanges] = useState(false);
-    const hasAnyFieldError = phoneNumberError || passwordError || confirmPasswordError;
+    const [phoneNumberError, setPhoneNumberError] = useState<boolean>(false);
+    const [passwordError, setPasswordError] = useState<boolean>(false);
+    const [confirmPasswordError, setConfirmPasswordError] = useState<boolean>(false);
+    const [currentPassword, setCurrentPassword] = useState<string>('');
+    const [hasAnyFieldChanges, setHasAnyFieldChanges] = useState<boolean>(false);
+    const hasAnyFieldError: boolean = phoneNumberError || passwordError || confirmPasswordError;
 
     const validatePhone = value => {
         if (value) {
@@ -70,6 +70,5 @@ export const useFormValidation = () => {
         hasAnyFieldChanges,
         setHasAnyFieldChanges
     }
-
 };
 

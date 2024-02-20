@@ -1,7 +1,12 @@
 import formClasses from "../../css/FormClasses.module.css";
-import {func, bool, string} from "prop-types";
 
-const Checkbox = props => {
+type checkBoxProps = {
+    checked: boolean
+    setChecked: Function
+    label: string
+}
+
+const Checkbox = (props: checkBoxProps) => {
 
     const {checked, setChecked, label} = props;
 
@@ -19,11 +24,5 @@ const Checkbox = props => {
         </div>
     );
 };
-
-Checkbox.propTypes = {
-    checked: bool,
-    setChecked: func,
-    label: string
-}
 
 export default Checkbox;

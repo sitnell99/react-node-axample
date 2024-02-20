@@ -1,11 +1,11 @@
-import {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import React, {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import {useLazyQuery} from "@apollo/client";
 import getUserData from "../queries/getUserData";
 
-const UserContext = createContext();
+const UserContext = createContext(null);
 
-const UserContextProvider = (props) => {
+const UserContextProvider = ({children}) => {
 
     const [getUserInfo] = useLazyQuery(getUserData, {
         fetchPolicy: "cache-and-network",
@@ -14,13 +14,13 @@ const UserContextProvider = (props) => {
 
     const navigate = useNavigate();
 
-    const token = localStorage.getItem('token');
+    const token: string = localStorage.getItem('token');
 
     const [user, setUser] = useState(null);
 
-    const isAuthorized = user?.phone?.length > 0;
+    const isAuthorized: boolean = user?.phone?.length > 0;
 
-    const logOutFunc = useCallback(() => {
+    const logOutFunc = useCallback((): void => {
         setUser(null);
         navigate('/login');
         localStorage.removeItem('token');
@@ -28,7 +28,7 @@ const UserContextProvider = (props) => {
 
     useEffect(() => {
         if (!isAuthorized && token) {
-            getUserInfo().then((res) => {
+            getUserInfo().then((res): void => {
                 if(res.error) {
                     logOutFunc();
                 } else if(!res.loading && res.data) {
@@ -38,11 +38,20 @@ const UserContextProvider = (props) => {
         }
     }, [token, isAuthorized, getUserInfo, logOutFunc])
 
-    const userContextInfo = useMemo(() => ({user, setUser, isAuthorized, logOutFunc}), [user, setUser, logOutFunc, isAuthorized]);
+    type UserInfo = {
+        user: object,
+        setUser: React.Dispatch<any>,
+        logOutFunc: () => void,
+        isAuthorized: boolean
+    }
+
+    const userContextInfo: UserInfo = useMemo(() => (
+        {user, setUser, isAuthorized, logOutFunc})
+    , [user, setUser, logOutFunc, isAuthorized]);
 
     return (
         <UserContext.Provider value={userContextInfo}>
-            {props.children}
+            {children}
         </UserContext.Provider>
     );
 };

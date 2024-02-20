@@ -3,12 +3,9 @@ import './tailwind.css';
 import Header from "../Header";
 import Routes from "../Routes";
 import Footer from "../Footer";
-import {useUserContext} from "../../context/UserContext";
-import Navigation from "../Navigation";
+import React, {FC} from "react";
 
-const Main = () => {
-
-    const { isAuthorized } = useUserContext();
+const Main: FC = () => {
 
     return (
         <main className={classes.container}>
@@ -19,5 +16,5 @@ const Main = () => {
             <Footer />
         </main>
     )
-}
-export default Main
+};
+export default Main;

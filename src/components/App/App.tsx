@@ -1,21 +1,20 @@
 import {ApolloClient, from, InMemoryCache} from '@apollo/client';
 import {ApolloProvider} from "@apollo/client/react";
 import {BrowserRouter} from "react-router-dom";
-import Main from "../Main";
+import Main from '../Main';
 import {onError} from "@apollo/client/link/error";
 import {createUploadLink} from "apollo-upload-client";
 import {setContext} from "@apollo/client/link/context";
 import UserContextProvider from "../../context/UserContext";
+import React, {FC} from "react";
 
-window.__APOLLO_DEVTOOLS_GLOBAL_HOOK__ = true;
-
-const App = () => {
+const App: FC = () => {
 
     const httpLink = createUploadLink({
         uri: `${process.env.REACT_APP_GRAPHQL_URL}/graphql`
     });
 
-    const token = localStorage.getItem('token')
+    const token: string | null = localStorage.getItem('token')
 
     const authLink = setContext((_, {headers}) => {
         return {
@@ -38,6 +37,7 @@ const App = () => {
 
     const apolloLink = from(
         [errorLink, authLink.concat(httpLink)],
+        // @ts-ignore
         createUploadLink()
     );
     const client = new ApolloClient({

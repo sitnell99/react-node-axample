@@ -1,7 +1,17 @@
+import React from "react";
 import formClasses from "../../css/FormClasses.module.css";
-import {func, object} from "prop-types";
 
-const SinglePost = props => {
+type SinglePostTypes = {
+    setPageView: Function,
+    postContent: {
+        title: string,
+        content: string,
+        published: boolean,
+        authorName: string
+    }
+}
+
+const SinglePost = (props: SinglePostTypes) => {
 
     const { setPageView, postContent } = props;
 
@@ -23,10 +33,5 @@ const SinglePost = props => {
         </>
     );
 };
-
-SinglePost.propTypes = {
-    setPageView: func,
-    postContent: object
-}
 
 export default SinglePost;

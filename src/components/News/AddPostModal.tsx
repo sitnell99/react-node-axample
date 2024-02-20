@@ -3,14 +3,22 @@ import {Form, Input, TextArea} from "informed";
 import {useMutation} from "@apollo/client";
 import AddPost from "../../mutations/addPost";
 import {useUserContext} from "../../context/UserContext";
+import React, {FC, Dispatch, SetStateAction, MutableRefObject} from "react";
+import {resultMessages} from "../../types/resultMessages";
 
-const AddPostForm = props => {
+type postFormProps = {
+    togglePostForm: () => void
+    postFormRef: MutableRefObject<any>
+    setResultMessage: Dispatch<SetStateAction<string>>
+}
+
+const AddPostForm: FC = (props: postFormProps) => {
 
     const { togglePostForm, postFormRef, setResultMessage } = props;
     const [addPost] = useMutation(AddPost);
     const {user} = useUserContext();
 
-    const handleAddNewPost = formValues => {
+    const handleAddNewPost = (formValues): void => {
         if(user?.id) {
             try {
                 const {
@@ -24,10 +32,10 @@ const AddPostForm = props => {
                     authorName: `${user.firstname} ${user.lastname}`
                 }});
                 togglePostForm();
-                setResultMessage('New Post was successfully added');
+                setResultMessage(resultMessages.postAdded);
             } catch (error) {
                 console.log(error)
-                setResultMessage('error happens')
+                setResultMessage(resultMessages.error)
             }
         }
     };

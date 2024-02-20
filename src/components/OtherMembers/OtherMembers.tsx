@@ -1,18 +1,26 @@
 import {useQuery} from "@apollo/client";
 import getOtherMembers from "../../queries/getOtherMembers";
-import {useState} from "react";
-import { ColorRing } from 'react-loader-spinner';
+import {FC, ReactElement, ReactNode, useState} from "react";
+import {ColorRing} from 'react-loader-spinner';
 import {useUserContext} from "../../context/UserContext";
 
-const OtherMembers = props => {
+type membersProps = {
+    classes: {
+        hideMember: string
+        base: string
+        details: string
+    }
+}
 
-    const { classes } = props;
+const OtherMembers = (props: membersProps) => {
 
-    const { data, loading } = useQuery(getOtherMembers, {
+    const {classes} = props;
+
+    const {data, loading} = useQuery(getOtherMembers, {
         fetchPolicy: "cache-first",
     });
 
-    const { user } = useUserContext();
+    const {user} = useUserContext();
 
     if (loading) {
         return (
@@ -23,7 +31,7 @@ const OtherMembers = props => {
                 ariaLabel="blocks-loading"
                 wrapperStyle={{}}
                 wrapperClass="m-auto"
-                colors={['#000']}
+                colors={['#000', '#000', '#000', '#000', '#000']}
             />
         );
     }
@@ -32,10 +40,17 @@ const OtherMembers = props => {
         return null;
     }
 
-    const Member = ({member}) => {
-        const [showMember, setShowMember] = useState(false);
-        const toggleMember = () => setShowMember(!showMember);
-        const hideMember = !showMember ? classes.hideMember : '';
+    type memberProps = {
+        firstname: string
+        lastname: string
+        birthdate: ReactNode
+        phone: string
+    }
+
+    const Member: FC = (member: memberProps) => {
+        const [showMember, setShowMember] = useState<boolean>(false);
+        const toggleMember = (): void => setShowMember(!showMember);
+        const hideMember: string = !showMember ? classes.hideMember : '';
         return (
             <>
                 <li onClick={toggleMember} className={classes.base}>
@@ -61,7 +76,7 @@ const OtherMembers = props => {
         )
     }
 
-    return data.getOtherMembers.filter(member => member.id !== user.id).map((member, index) => <Member member={member} key={index}/>);
+    return data.getOtherMembers.filter(member => member.id !== user.id).map((member, index) => <Member {...member} key={index}/>);
 }
 
 export default OtherMembers;

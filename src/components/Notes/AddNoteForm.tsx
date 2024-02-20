@@ -3,8 +3,16 @@ import {Form, Input, TextArea, Select} from "informed";
 import {useMutation} from "@apollo/client";
 import AddNote from "../../mutations/addNote";
 import {useUserContext} from "../../context/UserContext";
+import {resultMessages} from "../../types/resultMessages";
+import {Dispatch, FC, MutableRefObject, SetStateAction} from "react";
 
-const AddNoteForm = props => {
+type addNoteProps = {
+    setResultMessage: Dispatch<SetStateAction<string>>,
+    toggleNoteForm: () => void,
+    noteFormRef: MutableRefObject<any>
+}
+
+const AddNoteForm: FC = (props: addNoteProps) => {
 
     const { toggleNoteForm, noteFormRef, setResultMessage } = props;
     const [addNote] = useMutation(AddNote);
@@ -25,10 +33,10 @@ const AddNoteForm = props => {
                     authorId: user.id
                 }});
                 toggleNoteForm();
-                setResultMessage('New note was successfully added');
+                setResultMessage(resultMessages.noteAdded);
             } catch (error) {
                 console.log(error)
-                setResultMessage('error happens')
+                setResultMessage(resultMessages.error)
             }
         }
     };

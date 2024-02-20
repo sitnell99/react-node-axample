@@ -1,22 +1,29 @@
 import {useQuery} from "@apollo/client";
 import getPosts from "../../queries/getAllPosts";
 import {useModal} from "../../util/useModal";
-import {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {useUserContext} from "../../context/UserContext";
 import formClasses from "../../css/FormClasses.module.css";
 import AddPostModal from "./AddPostModal";
 import SinglePost from "./SinglePost";
 import Checkbox from "../Checkbox";
+import {resultMessages} from "../../types/resultMessages";
 
-const News = () => {
+const News: FC = () => {
 
     const {user, isAuthorized} = useUserContext();
     const {showModal: showPostForm, toggleModal: togglePostForm, modalRef: postFormRef} = useModal();
-    const [resultMessage, setResultMessage] = useState('');
-    const [pageView, setPageView] = useState('default');
-    const [selectedPost, setSelectedPost] = useState(0);
-    const [checked, setChecked] = useState(false);
-    const [sort, setSort] = useState('newest')
+    const [resultMessage, setResultMessage] = useState<resultMessages>(resultMessages.empty);
+
+    type pageViewStatus = "default" | "single";
+
+    const [pageView, setPageView] = useState<pageViewStatus>('default');
+    const [selectedPost, setSelectedPost] = useState<string>('no-id');
+    const [checked, setChecked] = useState<boolean>(false);
+
+    type sortStatus = "newest" | "oldest";
+
+    const [sort, setSort] = useState<sortStatus>('newest')
 
     const { data, loading, refetch: refetchPosts } = useQuery(getPosts, {
         fetchPolicy: "cache-first",
@@ -27,9 +34,9 @@ const News = () => {
 
 
     useEffect(() => {
-        setTimeout(() => {
+        setTimeout((): void => {
             if (resultMessage) {
-                setResultMessage('');
+                setResultMessage(resultMessages.empty);
                 refetchPosts();
             }
         }, 1500)
@@ -39,22 +46,33 @@ const News = () => {
         return null;
     }
 
-    const changePageView = (id) => {
+    const changePageView = (id: string): void => {
         setPageView('single');
         setSelectedPost(id);
     };
 
-    const allPosts = data.getAllPosts;
+    type postType = {
+        authorId: string
+        authorName: string
+        content: string
+        id: string
+        published: string
+        title: string
+    }
+
+    const allPosts: Array<postType> = data.getAllPosts;
 
     const sortedPosts = sort === 'newest'
-        ? [...allPosts].sort((a,b) => new Date(b.published) - new Date(a.published)) // ascending (new to old)
-        : [...allPosts].sort((a,b) => new Date(a.published) - new Date(b.published)); // descending (old to new)
+        // @ts-ignore
+        ? [...allPosts].sort((a: postType,b: postType) => new Date(b.published) - new Date(a.published)) // ascending (new to old)
+        // @ts-ignore
+        : [...allPosts].sort((a: postType,b: postType) => new Date(a.published) - new Date(b.published)); // descending (old to new)
 
-    const resultPosts = checked
-        ? sortedPosts.filter(post => post.authorId === user.id)
+    const resultPosts: Array<postType> = checked
+        ? sortedPosts.filter((post: postType): boolean => post.authorId === user.id)
         : sortedPosts;
 
-    const singlePost = allPosts.findIndex(post => post.id === selectedPost);
+    const singlePost = allPosts.findIndex((post: postType): boolean => post.id === selectedPost);
 
     const Posts = resultPosts.length > 0 ?
         (
@@ -124,10 +142,10 @@ const News = () => {
                 </div>
                 {showPostForm &&
                     <AddPostModal
-                        togglePostForm={togglePostForm}
+                        // @ts-ignore
                         postFormRef={postFormRef}
-                        resultMessage={resultMessage}
                         setResultMessage={setResultMessage}
+                        togglePostForm={togglePostForm}
                     />
                 }
                 {Posts}

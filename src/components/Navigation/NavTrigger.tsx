@@ -1,9 +1,15 @@
 import classes from "./Navigation.module.css";
 import {isMobile} from "react-device-detect";
 import {useUserContext} from "../../context/UserContext";
-import {bool, func, object} from "prop-types";
+import {MutableRefObject} from "react";
 
-const NavTrigger = props => {
+type navTriggerProps = {
+    openMenu: boolean,
+    toggleMenu: () => void,
+    triggerMenuRef: MutableRefObject<any>
+}
+
+const NavTrigger = (props: navTriggerProps) => {
 
     const {openMenu, toggleMenu, triggerMenuRef} = props;
     const {user} = useUserContext();
@@ -24,12 +30,6 @@ const NavTrigger = props => {
             {!isMobile && user.firstname}
         </button>
     );
-};
-
-NavTrigger.propTypes = {
-    openMenu: bool,
-    toggleMenu: func,
-    triggerMenuRef: object
 };
 
 export default NavTrigger;
