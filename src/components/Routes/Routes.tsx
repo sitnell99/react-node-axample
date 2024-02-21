@@ -11,15 +11,15 @@ const Routes = () =>  {
 
     return (
         <Switch>
-            <Route exact path={'/'} element={<News />} />
-            <Route exact path={'/news'} element={<News />} />
-            <Route exact path={'/notes'} element={<Notes />}>
+            <Route path={'/'} element={<News />} />
+            <Route path={'/news'} element={<News />} />
+            <Route path={'/notes'} element={<Notes />}>
                 {!isAuthorized && <Route path={'*'} element={<Navigate to={'/'} replace />}/>}
             </Route>
-            <Route exact path='/login' element={<LoginPage />}>
+            <Route path='/login' element={<LoginPage />}>
                 {isAuthorized && <Route path={'*'} element={<Navigate to={'/'} replace />}/>}
             </Route>
-            <Route exact path={'/cabinet'} element={<Cabinet />}>
+            <Route path={'/cabinet'} element={<Cabinet />}>
                 {!isAuthorized && <Route path={'*'} element={<Navigate to={'/'} replace />}/>}
             </Route>
         </Switch>

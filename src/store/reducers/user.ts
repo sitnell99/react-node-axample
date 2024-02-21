@@ -9,19 +9,19 @@ let initialState = {
 };
 
 const userSlice = createSlice({
-    name: 'user',
+    name: 'USER',
     initialState,
     reducers: {
-        initUser(state: typeof initialState = initialState, action) {
+        INIT_USER(state: typeof initialState = initialState, action) {
             if(action?.payload?.id) {
                 return action.payload;
             }
         },
-        updateUser(state, action) {
+        UPDATE_USER(state, action) {
             console.log('updateUser action')
         },
     }
 });
 
-export const { initUser, updateUser } = userSlice.actions;
+export const { INIT_USER, UPDATE_USER } = userSlice.actions;
 export default userSlice.reducer;

@@ -8,9 +8,9 @@
   },
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js",
-    "client-start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "yarn run react-scripts build",
+    "backend": "yarn run nodemon app.js",
+    "frontend": "yarn run react-scripts start"
   },
   "author": "Valentyn_Kuchak",
   "license": "ISC",

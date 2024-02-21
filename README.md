@@ -16,13 +16,13 @@
 
 3. Develop mode
 
-   3.1 Run backend in first console: npm run dev
+   3.1 Run backend in first console: yarn backend
 
-   3.2 Run frontend in second console: npm run client-start
+   3.2 Run frontend in second console: yarn frontend
 
 
 4. Production mode
 
-   4.1 Create frontend build: npm run build
+   4.1 Create frontend build: yarn build
 
    4.2 Start application: npm start (If mode in env file is production server will automatically use static files)

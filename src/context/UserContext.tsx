@@ -1,5 +1,5 @@
 import React, {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useLazyQuery} from "@apollo/client";
 import getUserData from "../queries/getUserData";
 import {useDispatch} from "react-redux";
@@ -37,19 +37,23 @@ const UserContextProvider = ({children}) => {
         localStorage.removeItem('token');
     }, [navigate]);
 
+    const handleGetUserData = useCallback((): void => {
+        getUserInfo().then((res): void => {
+            const {error, loading, data: {getUserData: {__typename, ...rest}}} = res;
+            if (error) {
+                logOutFunc();
+            } else if (!loading && rest) {
+                setUser(rest);
+                dispatch({type: 'USER/INIT_USER', payload: rest})
+            }
+        });
+    }, [getUserInfo, logOutFunc]);
+
     useEffect(() => {
-        if (!isAuthorized && token) {
-            getUserInfo().then((res): void => {
-                const {error, loading, data: {getUserData: {__typename, ...rest}} } = res;
-                if(error) {
-                    logOutFunc();
-                } else if(!loading && rest) {
-                    setUser(rest);
-                    dispatch({type: 'user/initUser', payload: rest})
-                }
-            });
+        if (!isAuthorized && token?.length > 0) {
+            handleGetUserData();
         }
-    }, [token, isAuthorized, getUserInfo, logOutFunc])
+    }, [isAuthorized, token])
 
     type UserContext = {
         user: object,
