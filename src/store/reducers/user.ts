@@ -1,27 +1,39 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {initUserThunk as INIT_USER} from "../actions/user/asyncThunks";
 
-let initialState = {
-    id: '',
-    phone: '',
-    lastname: '',
-    birthdate: '',
-    firstname: '',
+const initialState = {
+    info: {
+        id: '',
+        phone: '',
+        lastname: '',
+        birthdate: '',
+        firstname: '',
+    },
+    isLoading: false,
+    error: null,
+    isAuthorized: false
 };
 
 const userSlice = createSlice({
     name: 'USER',
     initialState,
-    reducers: {
-        INIT_USER(state: typeof initialState = initialState, action) {
-            if(action?.payload?.id) {
-                return action.payload;
-            }
-        },
-        UPDATE_USER(state, action) {
-            console.log('updateUser action')
-        },
+    reducers: {},
+    extraReducers: builder => {
+        builder.addCase(INIT_USER.pending, (state) => {
+            state.isLoading = true
+        })
+        builder.addCase(INIT_USER.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.info = action.payload
+            state.isAuthorized = true
+        })
+        builder.addCase(INIT_USER.rejected, (state, action) => {
+            state.isLoading = false
+            state.error = action.error.message
+            state.isAuthorized = false
+        })
     }
 });
 
-export const { INIT_USER, UPDATE_USER } = userSlice.actions;
+export const { } = userSlice.actions;
 export default userSlice.reducer;

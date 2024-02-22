@@ -1,7 +1,7 @@
 import classes from "../../css/FormClasses.module.css";
 import {Form, Input, TextArea, Select} from "informed";
 import {useMutation} from "@apollo/client";
-import AddNote from "../../mutations/addNote";
+import AddNote from "../../api/mutations/addNote";
 import {useUserContext} from "../../context/UserContext";
 import {resultMessages} from "../../types/resultMessages";
 import {Dispatch, FC, MutableRefObject, SetStateAction} from "react";

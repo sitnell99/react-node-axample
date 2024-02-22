@@ -3,6 +3,7 @@ import {isMobile} from "react-device-detect";
 import {useUserContext} from "../../context/UserContext";
 import {MutableRefObject} from "react";
 import {useSelector} from "react-redux";
+import {userFirstname} from "../../store/selectors/user";
 
 type navTriggerProps = {
     openMenu: boolean,
@@ -13,9 +14,8 @@ type navTriggerProps = {
 const NavTrigger = (props: navTriggerProps) => {
 
     const {openMenu, toggleMenu, triggerMenuRef} = props;
-    const {user} = useUserContext();
-    const selectUserName = state => state.user.firstname;
-    const userName = useSelector(selectUserName)
+    //const {user} = useUserContext();
+    const userName = useSelector(userFirstname)
 
     return (
         <button className={classes.trigger} onClick={toggleMenu} ref={triggerMenuRef}>

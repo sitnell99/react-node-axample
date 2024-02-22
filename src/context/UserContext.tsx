@@ -1,8 +1,10 @@
 import React, {createContext, useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useLazyQuery} from "@apollo/client";
-import getUserData from "../queries/getUserData";
+import getUserData from "../api/queries/getUserData";
+import {initUserThunk} from "../store/actions/user/asyncThunks";
 import {useDispatch} from "react-redux";
+import {AppDispatch} from "../store";
 
 const UserContext = createContext(null);
 
@@ -13,7 +15,7 @@ const UserContextProvider = ({children}) => {
         nextFetchPolicy: "cache-first"
     });
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
 
     const navigate = useNavigate();
 
@@ -39,19 +41,18 @@ const UserContextProvider = ({children}) => {
 
     const handleGetUserData = useCallback((): void => {
         getUserInfo().then((res): void => {
-            const {error, loading, data: {getUserData: {__typename, ...rest}}} = res;
+            const {error, loading, data: {getUserData}} = res;
             if (error) {
                 logOutFunc();
-            } else if (!loading && rest) {
-                setUser(rest);
-                dispatch({type: 'USER/INIT_USER', payload: rest})
+            } else if (!loading && getUserData) {
+                setUser(getUserData);
             }
         });
     }, [getUserInfo, logOutFunc]);
 
     useEffect(() => {
         if (!isAuthorized && token?.length > 0) {
-            handleGetUserData();
+            dispatch(initUserThunk(getUserInfo));
         }
     }, [isAuthorized, token])
 

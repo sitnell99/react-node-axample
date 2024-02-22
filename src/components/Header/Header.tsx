@@ -4,10 +4,13 @@ import {useUserContext} from "../../context/UserContext";
 import Navigation from "../Navigation";
 import NavTrigger from "../Navigation/NavTrigger";
 import {useModal} from "../../util/useModal";
+import {useSelector} from "react-redux";
+import {isUserAuthorized} from "../../store/selectors/user";
 
 const Header = () => {
 
-    const { isAuthorized } = useUserContext();
+    //const { isAuthorized } = useUserContext();
+    const isAuthorized = useSelector(isUserAuthorized);
 
     const {
         showModal: openMenu,

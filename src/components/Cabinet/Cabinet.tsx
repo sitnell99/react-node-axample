@@ -4,16 +4,18 @@ import {Form, Input} from "informed";
 import {useFormValidation} from "../../util/useFormValidation";
 import {useUserContext} from "../../context/UserContext";
 import {useMutation} from "@apollo/client";
-import UpdateUserData from "../../mutations/updateUserData";
+import UpdateUserData from "../../api/mutations/updateUserData";
 import {useState, useEffect, FC} from "react";
 import {Navigate} from "react-router-dom";
 import {resultMessages} from "../../types/resultMessages";
+import {useSelector} from "react-redux";
+import {userInformation} from "../../store/selectors/user";
 
 const Cabinet: FC = () => {
 
-    const {user, setUser} = useUserContext();
+    //const {user, setUser} = useUserContext();
     const [updateUserData] = useMutation(UpdateUserData);
-
+    const user = useSelector(userInformation)
     const [resultMessage, setResultMessage] = useState<resultMessages>(resultMessages.empty);
 
     const {
@@ -33,7 +35,7 @@ const Cabinet: FC = () => {
                 const {password_confirm, ...rest} = values;
                 const response = await updateUserData({variables: {...rest, id: user.id}});
                 if (response.data?.updateUserData) {
-                    await setUser(response.data.updateUserData)
+                    //await setUser(response.data.updateUserData)
                 }
                 setResultMessage(resultMessages.updatedInfo);
                 setHasAnyFieldChanges(false);

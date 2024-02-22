@@ -1,8 +1,8 @@
 import AddNoteForm from "./AddNoteForm";
 import {useModal} from "../../util/useModal";
 import {useMutation, useQuery} from "@apollo/client";
-import getAllNotes from "../../queries/getAllNotes";
-import RemoveNote from "../../mutations/removeNote";
+import getAllNotes from "../../api/queries/getAllNotes";
+import RemoveNote from "../../api/mutations/removeNote";
 import classes from "../News/News.module.css";
 import formClasses from "../../css/FormClasses.module.css";
 import {useState, useEffect, FC, ReactElement} from "react";

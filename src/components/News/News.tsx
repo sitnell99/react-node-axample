@@ -1,5 +1,5 @@
 import {useQuery} from "@apollo/client";
-import getPosts from "../../queries/getAllPosts";
+import getPosts from "../../api/queries/getAllPosts";
 import {useModal} from "../../util/useModal";
 import React, {FC, useEffect, useState} from "react";
 import {useUserContext} from "../../context/UserContext";
@@ -8,10 +8,14 @@ import AddPostModal from "./AddPostModal";
 import SinglePost from "./SinglePost";
 import Checkbox from "../Checkbox";
 import {resultMessages} from "../../types/resultMessages";
+import {useSelector} from "react-redux";
+import {isUserAuthorized} from "../../store/selectors/user";
 
 const News: FC = () => {
 
-    const {user, isAuthorized} = useUserContext();
+    const {user} = useUserContext();
+    const isAuthorized = useSelector(isUserAuthorized);
+
     const {showModal: showPostForm, toggleModal: togglePostForm, modalRef: postFormRef} = useModal();
     const [resultMessage, setResultMessage] = useState<resultMessages>(resultMessages.empty);
 

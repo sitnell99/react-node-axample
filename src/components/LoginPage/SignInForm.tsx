@@ -1,7 +1,7 @@
 import classes from "../../css/FormClasses.module.css";
 import {ReactElement, useState} from "react";
 import {useMutation} from "@apollo/client";
-import LogIn from "../../mutations/LogIn";
+import LogIn from "../../api/mutations/LogIn";
 import {Form, Input} from 'informed';
 import {useFormValidation} from "../../util/useFormValidation";
 import {useUserContext} from "../../context/UserContext";

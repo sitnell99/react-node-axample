@@ -1,6 +1,6 @@
 import classes from "../../css/FormClasses.module.css";
 import {useMutation} from "@apollo/client";
-import AddNewUser from '../../mutations/addNewUser';
+import AddNewUser from '../../api/mutations/addNewUser';
 import {Form, Input} from 'informed';
 import {useFormValidation} from "../../util/useFormValidation";
 import {Dispatch, FC, ReactElement, SetStateAction, useEffect, useState} from "react";

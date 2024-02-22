@@ -1,5 +1,5 @@
 import {useQuery} from "@apollo/client";
-import getOtherMembers from "../../queries/getOtherMembers";
+import getOtherMembers from "../../api/queries/getOtherMembers";
 import {FC, ReactElement, ReactNode, useState} from "react";
 import {ColorRing} from 'react-loader-spinner';
 import {useUserContext} from "../../context/UserContext";

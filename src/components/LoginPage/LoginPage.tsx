@@ -4,11 +4,14 @@ import SignInForm from "./SignInForm";
 import classes from "../../css/FormClasses.module.css";
 import {Navigate} from "react-router-dom";
 import {useUserContext} from "../../context/UserContext";
+import {useSelector} from "react-redux";
+import {isUserAuthorized} from "../../store/selectors/user";
 
 const LoginPage: FC = () => {
 
     const [defaultForm, setDefaultForm] = useState<boolean>(true);
-    const {isAuthorized} = useUserContext();
+    //const {isAuthorized} = useUserContext();
+    const isAuthorized = useSelector(isUserAuthorized);
 
     if(isAuthorized) {
         return <Navigate to={'/'}/>;
